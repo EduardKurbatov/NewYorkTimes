@@ -1,0 +1,17 @@
+@keyframes slidein {
+    from {
+      top: -200px;
+    }
+    to {
+        top: 20px;
+    }
+} 
+.error-whindow {
+    position: absolute;
+    right: 100px;
+    width: 250px;
+    height: auto;
+    background-color: lightblue;
+    text-align: center;
+    animation: .5s ease-in .5s both running slidein;
+}

@@ -1,0 +1,48 @@
+.header-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    background: cornflowerblue;
+    .header {
+        font-size: 20px;
+        padding-left: 20px;
+    }
+    .exist-user {
+        position: relative;
+        margin-right: 20px;
+        width: 50px;
+        background: #fff;
+        border-radius: 50%;
+        text-align: center;
+        .drop-down {
+            position: absolute;
+            top: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            align-items: center;
+            margin: 0 auto;
+            display: none;
+        }
+    }
+    .login-btn {
+        margin-right: 20px;
+        width: 50px;
+        background: #fff;
+        border-radius: 50%;
+        outline: none;
+        border: none;
+    }
+}
+
+.exist-user:hover {
+    .drop-down {
+        display: block;
+    }
+}

@@ -1,0 +1,28 @@
+$label-font-color: #106bda;
+
+.login {
+  max-width: 250px;
+  padding-top: 50px;
+  margin: 0 auto;
+  .loginContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid black;
+    .heading {
+      text-align: center;
+    }
+    label {
+      color: $label-font-color;
+    }
+    .btn-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .sign-btn {
+        width: 60%;
+      }
+    }
+  }
+}
