@@ -20,9 +20,8 @@ $label-font-color: #106bda;
       display: flex;
       flex-direction: column;
       align-items: center;
-      .sign-btn {
-        width: 60%;
-      }
+      justify-content: center;
+      margin-top: 25px;
     }
   }
 }

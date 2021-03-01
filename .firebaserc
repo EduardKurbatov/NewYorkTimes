@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "new-york-times-test-task"
+    "default": "new-york-times-test-task",
+    "nyt": "new-york-times-test-task"
   }
 }

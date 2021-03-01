@@ -3,9 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import fire from '../../fire';
 
-function Home(props) {
-  const { user, setUser } = props;
-
+function Home({user, setUser, hasAccount, setHasAccount}) {
   const history = useHistory();
 
   const goToMainPage = () => {
@@ -20,25 +18,22 @@ function Home(props) {
     history.push('/profile');
   };
 
-  const userExist = localStorage.getItem('userEmail');
-
   const handleLogOut = () => {
-    fire.auth().signOut();
+    fire.auth().signOut()
     localStorage.clear();
-    setUser(false);
+    setUser(null);
+    setHasAccount(false)
     goToSign();
   };
-
-  useEffect(() => {}, [userExist, user]);
 
   return (
     <div className="header-container">
       <h1 className="header" onClick={goToMainPage}>
         NY Times
       </h1>
-      {userExist ? (
-        <>
+      {user ? (
           <div className="exist-user">
+            <img width="45" height="45" src={fire.auth().currentUser.photoURL} alt={''} />
             <li className="drop-down">
               <button className="drop-down-btn" onClick={goToProfilePage}>
                 Profile
@@ -48,13 +43,8 @@ function Home(props) {
               </button>
             </li>
           </div>
-        </>
       ) : (
-        <>
-          <button className="login-btn" onClick={goToSign}>
-            login
-          </button>
-        </>
+          <button className="login-btn" onClick={goToSign}>Login</button>
       )}
     </div>
   );
