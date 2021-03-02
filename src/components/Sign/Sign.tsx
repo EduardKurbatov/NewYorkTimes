@@ -1,43 +1,46 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Signup.scss';
-import fire from '../../fire';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
 
-function Sign(props) {
-  const {user, setUser, hasAccount, setHasAccount} = props;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmedPassword, setConfirmedPassword] = useState('');
-  // const [hasAccount, setHasAccount] = useState(false);
-  const [signInError, setSignInError] = useState('');
-  const [signUpError, setSignUpError] = useState('');
-  const [validEmail, setValidEmail] = useState(false);
-  const [validEmailErr, setValidEmailErr] = useState('');
-  const [validPassWord, setValidPassWord] = useState(false);
-  const [validPassErr, setValidPassErr] = useState('');
-  const [validConfirmedPassword, setValidConfirmedPassword] = useState(false);
-  const [confirmedPassErr, setConfirmedPassErr] = useState('');	
-  const [validUserData, setValidUserData] = useState(false);	
+interface Props {
+  hasAccount: Boolean,
+  setHasAccount: (value: React.SetStateAction<boolean>) => void
+}
+
+const Sign =(props: Props) => {
+  const {hasAccount, setHasAccount} = props;
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmedPassword, setConfirmedPassword] = useState<string>('');
+  const [signInError, setSignInError] = useState<string>('');
+  const [signUpError, setSignUpError] = useState<string>('');
+  const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [validEmailErr, setValidEmailErr] = useState<string>('');
+  const [validPassWord, setValidPassWord] = useState<boolean>(false);
+  const [validPassErr, setValidPassErr] = useState<string>('');
+  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(false);
+  const [confirmedPassErr, setConfirmedPassErr] = useState<string>('');	
+  const [validUserData, setValidUserData] = useState<boolean>(false);	
 
   const history = useHistory();
 
-  const successSignIn = () => {
+  const successSignIn = (): void => {
     history.push('/main');
   };
 
-  const clearErrors = () => {
+  const clearErrors = (): void => {
     setSignUpError('');
     setSignInError('');
   };
 
-  const clearInputs = () => {
+  const clearInputs = (): void => {
     setEmail('');
     setPassword('');
   }
 
-  const changeSign = () => {
+  const changeSign = (): void => {
     setHasAccount(!hasAccount);
     clearInputs();
   }
@@ -68,7 +71,7 @@ function Sign(props) {
     }
   };
 
-  const validDataListener = () => {
+  const validDataListener = (): void => {
       if(validEmail && validPassWord && validConfirmedPassword) {
         setValidUserData(true);
       } else {
@@ -77,7 +80,7 @@ function Sign(props) {
   }
 
 
-  const handleSignUp = () => {
+  const handleSignUp = ():void => {
     switch(false) {
       case validEmail :  
       setValidEmailErr('email must be in valid format');
@@ -102,7 +105,7 @@ function Sign(props) {
     }; 
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = (): void => {
     clearErrors();
     initLogin(email, password)
     .then(() => {

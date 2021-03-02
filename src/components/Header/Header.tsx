@@ -1,24 +1,30 @@
 import './Header.scss';
 import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
 import fire from '../../fire';
 
-function Home({user, setUser, hasAccount, setHasAccount}) {
+interface Props {
+  setUser: (value: React.SetStateAction<object | null>) => void 
+  hasAccount: Boolean,
+  setHasAccount: (value: React.SetStateAction<boolean>) => void,
+  fileUrl: string | null, 
+}
+
+const Home = ({setUser, hasAccount, setHasAccount, fileUrl}: Props) => {
   const history = useHistory();
 
-  const goToMainPage = () => {
+  const goToMainPage = (): void => {
     history.push('/main');
   };
 
-  const goToSign = () => {
+  const goToSign = (): void => {
     history.push('/sign');
   };
 
-  const goToProfilePage = () => {
+  const goToProfilePage = (): void => { 
     history.push('/profile');
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = (): void => {
     fire.auth().signOut()
     localStorage.clear();
     setUser(null);
@@ -26,14 +32,20 @@ function Home({user, setUser, hasAccount, setHasAccount}) {
     goToSign();
   };
 
+  console.log();
+  
+  
   return (
     <div className="header-container">
       <h1 className="header" onClick={goToMainPage}>
         NY Times
       </h1>
-      {user ? (
+      {hasAccount ? (
           <div className="exist-user">
-            <img width="45" height="45" src={fire.auth().currentUser.photoURL} alt={''} />
+
+            {/* got a problem with src attribute}
+            {/* <img width="45" height="45" src={} alt={''} /> */}
+
             <li className="drop-down">
               <button className="drop-down-btn" onClick={goToProfilePage}>
                 Profile
@@ -48,6 +60,6 @@ function Home({user, setUser, hasAccount, setHasAccount}) {
       )}
     </div>
   );
-}
+};
 
 export default Home;
