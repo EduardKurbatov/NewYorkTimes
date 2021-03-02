@@ -8,9 +8,8 @@ import fire from './fire';
 import Profile from './components/Profile/Profile';
 
 const App: FC = () => {
-  const [user, setUser] = useState<null|object>(null);
+  const [user, setUser] = useState<object>({});
   const [hasAccount, setHasAccount] = useState<boolean>(false);
-  const [fileUrl, setFileUrl] = useState<string | null>('')
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
@@ -19,7 +18,7 @@ const App: FC = () => {
         localStorage.setItem('user', JSON.stringify(user));
         setHasAccount(true);
       } else {
-        setUser(null);
+        setUser({});
       } ;
     });
   };
@@ -37,7 +36,6 @@ const App: FC = () => {
           setUser={setUser}
           hasAccount={hasAccount}
           setHasAccount={setHasAccount} 
-          fileUrl={fileUrl}
         />
         <Route path="/main" component={Main}></Route>
         <Route
@@ -53,7 +51,6 @@ const App: FC = () => {
           component={() => 
           <Profile 
             setUser={setUser} 
-            setFileUrl={setFileUrl}
           />}>
         </Route>
       </div>

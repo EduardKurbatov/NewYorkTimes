@@ -1,15 +1,16 @@
 import './Header.scss';
 import { useHistory } from 'react-router-dom';
+import defaultLogo from '../../assets/nouserimg.jpg';  
 import fire from '../../fire';
 
 interface Props {
-  setUser: (value: React.SetStateAction<object | null>) => void 
+  setUser: (value: React.SetStateAction<object>) => void 
   hasAccount: Boolean,
   setHasAccount: (value: React.SetStateAction<boolean>) => void,
-  fileUrl: string | null, 
 }
 
-const Home = ({setUser, hasAccount, setHasAccount, fileUrl}: Props) => {
+const Home = ({setUser, hasAccount, setHasAccount}: Props) => {
+
   const history = useHistory();
 
   const goToMainPage = (): void => {
@@ -27,13 +28,10 @@ const Home = ({setUser, hasAccount, setHasAccount, fileUrl}: Props) => {
   const handleLogOut = (): void => {
     fire.auth().signOut()
     localStorage.clear();
-    setUser(null);
+    setUser({});
     setHasAccount(false)
     goToSign();
-  };
-
-  console.log();
-  
+  };  
   
   return (
     <div className="header-container">
@@ -42,10 +40,11 @@ const Home = ({setUser, hasAccount, setHasAccount, fileUrl}: Props) => {
       </h1>
       {hasAccount ? (
           <div className="exist-user">
-
-            {/* got a problem with src attribute}
-            {/* <img width="45" height="45" src={} alt={''} /> */}
-
+            {fire.auth().currentUser?.photoURL ? (
+              <img width="45" height="45" src={fire.auth().currentUser?.photoURL?.toString()} alt={''} /> 
+              ) : (
+              <img width="45" height="45" src={defaultLogo} alt={''} /> 
+            )}
             <li className="drop-down">
               <button className="drop-down-btn" onClick={goToProfilePage}>
                 Profile
