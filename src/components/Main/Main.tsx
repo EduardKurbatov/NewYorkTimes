@@ -1,6 +1,6 @@
 import './Main.scss';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 type MediaAsset =  {
   url: string,
@@ -28,7 +28,7 @@ type Article = {
   eta_id: number,
   geo_facet: any[],
   id: number,
-  media: Media[], // TODO: ADD CUSTOM TYPE FOR MEDIA
+  media: Media[],
   nytdsection: string,
   org_facet: string[],
   per_facet: string[],
@@ -43,9 +43,22 @@ type Article = {
   url: string
 };
 
+interface Props {
+  hasAccount: boolean,
+  title: string,
+  img: string,
+  setTitle: (value: React.SetStateAction<string>) => void,
+  setImg: (value: React.SetStateAction<string>) => void,
+}
 
-function Main() {
+
+function Main(props: Props) {
+ const {hasAccount, title, img, setTitle, setImg} = props
   const [articles, setArticles] = useState<Article[]>([]);
+  // const [title, setTitle] = useState<string>('');
+  // const [img, setImg] = useState<string>('');
+
+  const history = useHistory();
 
   function execute() {
     const url = "https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=oLLGAGDyC2xECFJqIDKqxlczH0fE3gGO";
@@ -75,20 +88,34 @@ function Main() {
       .catch(err => {
         console.error(err);
       });
-  };
+    };
 
+    
+    useEffect(() => { 
+      execute()
+    }, [])
+       
 return (
   <div className="main-page">
-    <h1>This is main page</h1>
-    <button onClick={execute}>Exe</button>
-    <div>
+    <div className="articles-container"> 
       {articles.map((article: Article, index) => {
-          return (
-          <div key={index}>
-            <span>{article.title}</span>
+        return (
+             <div className="article" key={index} onClick={() => {
+                if(hasAccount) { 
+                  history.push('/article');
+                  setTitle(article.title);
+                  setImg(article.media[0] ? article.media[0]['media-metadata'][2].url : '');
+                } else {
+                  history.push('/sign');
+              } 
+             }}>
+            <div className="title">
+              <span>{article.title}</span>
+            </div>
+            { article.media[0] && <img src={article.media[0]["media-metadata"][2].url} alt={article.title} /> }
           </div>
           )
-      })}
+        })}
     </div>
   </div>
   )

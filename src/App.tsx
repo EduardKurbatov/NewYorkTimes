@@ -6,10 +6,20 @@ import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import fire from './fire';
 import Profile from './components/Profile/Profile';
+import ArticlePage from './components/ArticlePage/ArticlePage';
+
+// TODO: insert this Enum to global navigation
+export enum Routes {
+  MAIN = '/',
+  PROFILE = '/profile',
+  SIGN = '/sign',
+};
 
 const App: FC = () => {
   const [user, setUser] = useState<object>({});
   const [hasAccount, setHasAccount] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [img, setImg] = useState<string>('');
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
@@ -37,7 +47,17 @@ const App: FC = () => {
           hasAccount={hasAccount}
           setHasAccount={setHasAccount} 
         />
-        <Route path="/main" component={Main}></Route>
+        <Route
+         path="/main"
+         component={() => 
+          <Main 
+            hasAccount={hasAccount}
+            title={title}
+            img={img}
+            setTitle={setTitle} 
+            setImg={setImg}
+          />}
+        ></Route>
         <Route
           path="/sign"
           component={() =>
@@ -52,6 +72,12 @@ const App: FC = () => {
           <Profile 
             setUser={setUser} 
           />}>
+        </Route>
+        <Route
+          path='/article'
+          component ={() =>
+          <ArticlePage title={title} img={img} />
+          }>
         </Route>
       </div>
     </BrowserRouter>

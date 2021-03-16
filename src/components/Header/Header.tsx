@@ -4,9 +4,9 @@ import defaultLogo from '../../assets/nouserimg.jpg';
 import fire from '../../fire';
 
 interface Props {
-  setUser: (value: React.SetStateAction<object>) => void 
+  setUser: (value: React.SetStateAction<object>) => void,
   hasAccount: Boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void,
+  setHasAccount: (value: React.SetStateAction<boolean>) => void
 }
 
 const Home = ({setUser, hasAccount, setHasAccount}: Props) => {

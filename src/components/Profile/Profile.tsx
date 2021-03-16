@@ -9,10 +9,10 @@ interface Props {
 const Profile = (props: Props) => {
 	const {setUser} = props;
 	const [userImg, setUserImg] = useState<Blob | null>(null);
-  const [imgName, setImgName] = useState<string>('')
+  	const [imgName, setImgName] = useState<string>('')
 	const [disabled, setDisabled] = useState<boolean>(true);
 	const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);	
-  const [previewError, setPreviewError] = useState<Boolean>(false);
+ 	const [previewError, setPreviewError] = useState<Boolean>(false);
 	
 	const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		console.log(imagePreview);
