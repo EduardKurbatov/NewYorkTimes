@@ -9,17 +9,24 @@ import Profile from './components/Profile/Profile';
 import ArticlePage from './components/ArticlePage/ArticlePage';
 
 // TODO: insert this Enum to global navigation
-export enum Routes {
-  MAIN = '/',
-  PROFILE = '/profile',
-  SIGN = '/sign',
-};
+// export enum Routes {
+//   MAIN = '/',
+//   PROFILE = '/profile',
+//   SIGN = '/sign',
+// };
+
+ export type Items = {
+  title: string,
+  imgUrl: string,
+  byLine: string,
+  tags: string[],
+  abstract: string
+}
 
 const App: FC = () => {
   const [user, setUser] = useState<object>({});
   const [hasAccount, setHasAccount] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>('');
-  const [img, setImg] = useState<string>('');
+  const [articleItems, setArticleItems] = useState<Items | undefined>();
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
@@ -33,11 +40,14 @@ const App: FC = () => {
     });
   };
 
+  console.log(articleItems);
+  
+
   useEffect(() => {
     authListener();
   }, []);
   
-  useEffect(() => {}, [user])  
+  useEffect(() => {}, [user]);
 
   return (
     <BrowserRouter>
@@ -52,10 +62,7 @@ const App: FC = () => {
          component={() => 
           <Main 
             hasAccount={hasAccount}
-            title={title}
-            img={img}
-            setTitle={setTitle} 
-            setImg={setImg}
+            setArticleItems={setArticleItems}
           />}
         ></Route>
         <Route
@@ -76,7 +83,7 @@ const App: FC = () => {
         <Route
           path='/article'
           component ={() =>
-          <ArticlePage title={title} img={img} />
+          <ArticlePage articleItems={articleItems} />
           }>
         </Route>
       </div>

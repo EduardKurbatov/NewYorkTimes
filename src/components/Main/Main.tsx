@@ -1,6 +1,7 @@
 import './Main.scss';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Items } from '../../App';
 
 type MediaAsset =  {
   url: string,
@@ -42,22 +43,15 @@ type Article = {
   uri: string,
   url: string
 };
-
 interface Props {
   hasAccount: boolean,
-  title: string,
-  img: string,
-  setTitle: (value: React.SetStateAction<string>) => void,
-  setImg: (value: React.SetStateAction<string>) => void,
+  setArticleItems: (value: React.SetStateAction<Items | undefined>) => void
 }
 
 
 function Main(props: Props) {
- const {hasAccount, title, img, setTitle, setImg} = props
+  const {hasAccount, setArticleItems} = props
   const [articles, setArticles] = useState<Article[]>([]);
-  // const [title, setTitle] = useState<string>('');
-  // const [img, setImg] = useState<string>('');
-
   const history = useHistory();
 
   function execute() {
@@ -102,17 +96,27 @@ return (
         return (
              <div className="article" key={index} onClick={() => {
                 if(hasAccount) { 
+                  const items = {
+                    title: article.title,
+                    imgUrl: article.media[0] ? article.media[0]['media-metadata'][2].url : '',
+                    byLine: article.byline,
+                    tags: article.des_facet,
+                    abstract: article.abstract
+                  }
+                  setArticleItems(items);
                   history.push('/article');
-                  setTitle(article.title);
-                  setImg(article.media[0] ? article.media[0]['media-metadata'][2].url : '');
                 } else {
                   history.push('/sign');
               } 
              }}>
-            <div className="title">
-              <span>{article.title}</span>
+            <div className="fade"></div>
+            <div className="author-container">
+              <span className="author">{article.byline}</span>
+            </div>  
+            <div className="title-container">
+              <span className="title">{article.title}</span>
             </div>
-            { article.media[0] && <img src={article.media[0]["media-metadata"][2].url} alt={article.title} /> }
+            { article.media[0] && <img className="article-title-image" src={article.media[0]["media-metadata"][2].url} alt={article.title} /> }
           </div>
           )
         })}
