@@ -6,7 +6,7 @@ interface Props {
 }
 
 
-function ArticlePage(props: Props) {
+function ArticlePage (props: Props) {
   const {articleItems} = props
   const history = useHistory();    
   
