@@ -50,7 +50,7 @@ const Sign =(props: Props) => {
 
   const validatePassword = () => {
     const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
-      return setValidPassWord(passwordRegex.test(password));
+    return setValidPassWord(passwordRegex.test(password));
   };
 
   const validateConfirmedPassword = () => {
@@ -158,7 +158,7 @@ const Sign =(props: Props) => {
             </>
           )}
         </div>
-        { errorMessages && 
+        {errorMessages && 
           <ErrorModal
             errorMessages={errorMessages}
             setErrorMessages={setErrorMessages}
