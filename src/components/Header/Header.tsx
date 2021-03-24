@@ -1,61 +1,48 @@
 import './Header.scss';
 import { useHistory } from 'react-router-dom';
-import defaultLogo from '../../assets/nouserimg.jpg';  
+import defaultPhoto from '../../assets/nouserimg.jpg';  
+import { useState, useEffect } from 'react';
 import fire from '../../fire';
 
 interface Props {
-  setUser: (value: React.SetStateAction<object>) => void 
-  hasAccount: Boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void,
+  user: any,
+  setUser: (value: React.SetStateAction<any>) => void,
+  hasAccount: boolean,
+  setHasAccount: (value: React.SetStateAction<boolean>) => void
 }
 
-const Home = ({setUser, hasAccount, setHasAccount}: Props) => {
-
+const Home = (props: Props) => {
+  const {setUser, setHasAccount, user, hasAccount} = props
+  const [userPhoto, setUsserPhoto] = useState<string | null | undefined>('')
   const history = useHistory();
 
-  const goToMainPage = (): void => {
-    history.push('/main');
-  };
-
-  const goToSign = (): void => {
-    history.push('/sign');
-  };
-
-  const goToProfilePage = (): void => { 
-    history.push('/profile');
-  };
-
   const handleLogOut = (): void => {
-    fire.auth().signOut()
+    fire.auth().signOut();
     localStorage.clear();
     setUser({});
-    setHasAccount(false)
-    goToSign();
+    setHasAccount(false);
+    history.push('/sign');
   };  
+
+  useEffect(() => {
+    setUsserPhoto(user ? fire.auth().currentUser?.photoURL : null);
+  }, [user]);
   
   return (
     <div className="header-container">
-      <h1 className="header" onClick={goToMainPage}>
-        NY Times
-      </h1>
-      {hasAccount ? (
+      <h1 className="header" onClick={() => {history.push('/main')}}>NY Times</h1>
+      {user ? (
           <div className="exist-user">
-            {fire.auth().currentUser?.photoURL ? (
-              <img width="45" height="45" src={fire.auth().currentUser?.photoURL?.toString()} alt={''} /> 
-              ) : (
-              <img width="45" height="45" src={defaultLogo} alt={''} /> 
-            )}
-            <li className="drop-down">
-              <button className="drop-down-btn" onClick={goToProfilePage}>
-                Profile
-              </button>
-              <button className="drop-down-btn" onClick={handleLogOut}>
-                LogOut
-              </button>
-            </li>
+            <img className="user-avatar" src={userPhoto || defaultPhoto} alt={''} /> 
+            {hasAccount &&
+              <li className="drop-down">
+                <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>
+                <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
+              </li>
+            }
           </div>
       ) : (
-          <button className="login-btn" onClick={goToSign}>Login</button>
+          <button className="login-btn" onClick={() => {history.push('/sign')}}>Login</button>
       )}
     </div>
   );

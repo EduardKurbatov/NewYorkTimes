@@ -8,12 +8,12 @@ import fire from './fire';
 import Profile from './components/Profile/Profile';
 
 const App: FC = () => {
-  const [user, setUser] = useState<object>({});
+  const [user, setUser] = useState<any>();
   const [hasAccount, setHasAccount] = useState<boolean>(false);
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
-      if(user) {
+      if (user) {
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
         setHasAccount(true);
@@ -27,12 +27,13 @@ const App: FC = () => {
     authListener();
   }, []);
   
-  useEffect(() => {}, [user])  
+  useEffect(() => {}, [user]);
 
   return (
     <BrowserRouter>
       <div className="App">
         <Header 
+          user={user}
           setUser={setUser}
           hasAccount={hasAccount}
           setHasAccount={setHasAccount} 
@@ -42,8 +43,8 @@ const App: FC = () => {
           path="/sign"
           component={() =>
              <Sign 
-             hasAccount={hasAccount}
-             setHasAccount={setHasAccount} 
+              hasAccount={hasAccount}
+              setHasAccount={setHasAccount} 
              />}
         ></Route>
         <Route 
@@ -51,7 +52,8 @@ const App: FC = () => {
           component={() => 
           <Profile 
             setUser={setUser} 
-          />}>
+          />
+        }>
         </Route>
       </div>
     </BrowserRouter>

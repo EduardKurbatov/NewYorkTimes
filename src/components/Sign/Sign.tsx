@@ -14,8 +14,7 @@ const Sign =(props: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
-  const [signInError, setSignInError] = useState<string>('');
-  const [signUpError, setSignUpError] = useState<string>('');
+  const [errorMessages, setErrorMessages] = useState<string[] | null>(null)
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [validEmailErr, setValidEmailErr] = useState<string>('');
   const [validPassWord, setValidPassWord] = useState<boolean>(false);
@@ -31,8 +30,7 @@ const Sign =(props: Props) => {
   };
 
   const clearErrors = (): void => {
-    setSignUpError('');
-    setSignInError('');
+    setErrorMessages([]);
   };
 
   const clearInputs = (): void => {
@@ -46,41 +44,24 @@ const Sign =(props: Props) => {
   }
 
   const validateEmail = () => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(re.test(String(email).toLowerCase())) {
-    return setValidEmail(re.test(String(email).toLowerCase()))
-  } else {
-    return setValidEmail(re.test(String(email).toLowerCase()));
-  };
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return setValidEmail(emailRegex.test(String(email).toLowerCase()));
 };
 
   const validatePassword = () => {
-    const re = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
-    if(re.test(password)) {
-      return setValidPassWord(re.test(password));
-    } else { 
-      return setValidPassWord(re.test(password));
-    };
+    const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
+      return setValidPassWord(passwordRegex.test(password));
   };
 
   const validateConfirmedPassword = () => {
-    if(password === confirmedPassword) {
-      return setValidConfirmedPassword(true);
-    } else {
-      return setValidConfirmedPassword(false);
-    }
+    return setValidConfirmedPassword(password === confirmedPassword);
   };
 
   const validDataListener = (): void => {
-      if(validEmail && validPassWord && validConfirmedPassword) {
-        setValidUserData(true);
-      } else {
-        setValidUserData(false)
-      }
+    setValidUserData(validEmail && validPassWord && validConfirmedPassword);
   }
 
-
-  const handleSignUp = ():void => {
+  const handleSignUp = (): void => {
     switch(false) {
       case validEmail :  
       setValidEmailErr('email must be in valid format');
@@ -93,26 +74,23 @@ const Sign =(props: Props) => {
       break;
       default:
     }
+
     if(validUserData) {
       clearErrors();
-      createUser(email, password)
-        .then(() => {
-          successSignIn();
-        })
-        .catch(err => {
-          setSignUpError(err.message);
+      createUser(email, password).then(() => {
+        successSignIn();
+        }).catch(err => {
+          setErrorMessages(err.message);
         });
     }; 
   };
 
   const handleSignIn = (): void => {
     clearErrors();
-    initLogin(email, password)
-    .then(() => {
-        successSignIn();
-      })
-      .catch(err => {
-        setSignInError(err.message);
+    initLogin(email, password).then(() => {
+      successSignIn();
+      }).catch(err => {
+        setErrorMessages(err.message);
       });
     };
 
@@ -121,12 +99,12 @@ const Sign =(props: Props) => {
     validatePassword();
     validateConfirmedPassword();
     validDataListener();
-  })
+  });
 
   return (
     <div className="login">
       <div className="loginContainer">
-        <h1 className="heading">{!hasAccount ? "Sign in" : "Sign Up"}</h1>
+        <h1 className="heading">{hasAccount ? "Sign Up" : "Sign In"}</h1>
         <label>User Email</label>
         <input
           type="text"
@@ -135,7 +113,7 @@ const Sign =(props: Props) => {
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <p className="err-msg">{validEmail ? '' : validEmailErr }</p>
+        <p className="err-msg">{validEmail && validEmailErr}</p>
         <label>Password</label>
         <input
           type="password"
@@ -164,19 +142,15 @@ const Sign =(props: Props) => {
         <div className="btn-container">
           {hasAccount ? (
             <>
-              <button className="sign-btn" onClick={handleSignUp}>
-                Sign Up
-              </button>
+              <button className="sign-btn" onClick={handleSignUp}>Sign Up</button>
               <p>
                 Allready have an account ?
-                <span onClick={changeSign}> Sign in</span>
+                <span onClick={changeSign}>Sign in</span>
               </p>
             </>
           ) : (
             <>
-              <button className="sign-btn" onClick={handleSignIn}>
-                Sign In
-              </button>
+              <button className="sign-btn" onClick={handleSignIn}>Sign In</button>
               <p>
                 Don't have an account ?
                 <span onClick={changeSign}> Sign Up</span>
@@ -184,14 +158,12 @@ const Sign =(props: Props) => {
             </>
           )}
         </div>
-        {(signInError || signUpError) && (
+        { errorMessages && 
           <ErrorModal
-            setSignInError={setSignInError}
-            setSignUpError={setSignUpError}
-            signInError={signInError}
-            signUpError={signInError}
+            errorMessages={errorMessages}
+            setErrorMessages={setErrorMessages}
           />
-        )}
+        }
       </div>
     </div>
   );
