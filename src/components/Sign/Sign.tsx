@@ -14,14 +14,16 @@ const Sign =(props: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
-  const [errorMessages, setErrorMessages] = useState<string[] | null>(null)
+  const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [validEmailErr, setValidEmailErr] = useState<string>('');
   const [validPassWord, setValidPassWord] = useState<boolean>(false);
   const [validPassErr, setValidPassErr] = useState<string>('');
   const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(false);
-  const [confirmedPassErr, setConfirmedPassErr] = useState<string>('');	
-  const [validUserData, setValidUserData] = useState<boolean>(false);	
+  const [confirmedPassErr, setConfirmedPassErr] = useState<string>('');
+  const [validUserData, setValidUserData] = useState<boolean>(false);
+  const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
 
   const history = useHistory();
 
@@ -36,7 +38,7 @@ const Sign =(props: Props) => {
   const clearInputs = (): void => {
     setEmail('');
     setPassword('');
-  }
+  };
 
   const changeSign = (): void => {
     setHasAccount(!hasAccount);
@@ -44,12 +46,10 @@ const Sign =(props: Props) => {
   }
 
   const validateEmail = () => {
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return setValidEmail(emailRegex.test(String(email).toLowerCase()));
 };
 
   const validatePassword = () => {
-    const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
     return setValidPassWord(passwordRegex.test(password));
   };
 
@@ -59,7 +59,7 @@ const Sign =(props: Props) => {
 
   const validDataListener = (): void => {
     setValidUserData(validEmail && validPassWord && validConfirmedPassword);
-  }
+  };
 
   const handleSignUp = (): void => {
     switch(false) {
@@ -72,8 +72,8 @@ const Sign =(props: Props) => {
       case validConfirmedPassword:
       setConfirmedPassErr('Confirmed password is not the same as password');
       break;
-      default:
-    }
+      default: setValidUserData(true);
+    };
 
     if(validUserData) {
       clearErrors();
@@ -122,7 +122,7 @@ const Sign =(props: Props) => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        {hasAccount ? (
+        {hasAccount && (
           <>
         <p className="err-msg">{validPassErr}</p>
         <label>Confirm The Password</label>
@@ -135,28 +135,15 @@ const Sign =(props: Props) => {
         />
         {confirmedPassErr ? (<p className="err-msg">{confirmedPassErr}</p>) : (<></>)}
         </>
-        ) : (
-          <>
-          </>
         )}
         <div className="btn-container">
-          {hasAccount ? (
-            <>
-              <button className="sign-btn" onClick={handleSignUp}>Sign Up</button>
-              <p>
-                Allready have an account ?
-                <span onClick={changeSign}>Sign in</span>
-              </p>
-            </>
-          ) : (
-            <>
-              <button className="sign-btn" onClick={handleSignIn}>Sign In</button>
-              <p>
-                Don't have an account ?
-                <span onClick={changeSign}> Sign Up</span>
-              </p>
-            </>
-          )}
+          <button className="sign-btn" onClick={hasAccount ? handleSignUp : handleSignIn}>
+            Sign {hasAccount ? "Up" : "In"}
+          </button>
+          <p>
+            {hasAccount ? "Allready have an account ?" : "Don't have an account ?"}
+            <span onClick={changeSign}>Sign {hasAccount ? "In" : "Up"}</span>
+          </p>
         </div>
         {errorMessages && 
           <ErrorModal

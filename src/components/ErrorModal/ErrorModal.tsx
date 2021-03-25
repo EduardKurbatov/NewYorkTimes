@@ -1,17 +1,16 @@
 import './ErrorModal.scss'
 
 interface Props {
-    errorMessages: string[],
-    setErrorMessages: (value: React.SetStateAction<string[] | null>) => void
+  errorMessages: string[],
+  setErrorMessages: (value: React.SetStateAction<string[] | null>) => void
 }
 
 function ErrorModal(props: Props) {
+  const {errorMessages, setErrorMessages} = props;
 
-const {errorMessages, setErrorMessages} = props
-
-const closeModal = () => {
-  setErrorMessages(null);
-}
+  const closeModal = () => {
+    setErrorMessages(null);
+  }
 
   return (
     <div className="error-whindow">
@@ -21,4 +20,4 @@ const closeModal = () => {
   )
 }
 
-export default ErrorModal
+export default ErrorModal;

@@ -12,8 +12,8 @@ interface Props {
 }
 
 const Home = (props: Props) => {
-  const {setUser, setHasAccount, user, hasAccount} = props
-  const [userPhoto, setUsserPhoto] = useState<string | null | undefined>('')
+  const {setUser, setHasAccount, user, hasAccount} = props;
+  const [userPhoto, setUserPhoto] = useState<string | null | undefined>('');
   const history = useHistory();
 
   const handleLogOut = (): void => {
@@ -25,7 +25,7 @@ const Home = (props: Props) => {
   };  
 
   useEffect(() => {
-    setUsserPhoto(user ? fire.auth().currentUser?.photoURL : null);
+    setUserPhoto(user ? fire.auth().currentUser?.photoURL : null);
   }, [user]);
   
   return (

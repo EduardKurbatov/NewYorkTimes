@@ -4,16 +4,16 @@ import { useState } from 'react';
 import '@firebase/storage';
 
 interface Props {
-  setUser: (value: React.SetStateAction<object>) => void,
+  setUser: (value: React.SetStateAction<any>) => void,
 }
 
 const Profile = (props: Props) => {
   const {setUser} = props;
   const [userImg, setUserImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
-  const [previewError, setPreviewError] = useState<Boolean>(false);
+  const [previewError, setPreviewError] = useState<boolean>(false);
 
-  const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
     const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
     if (file && ALLOWED_TYPES.includes(file.type)) {
@@ -37,9 +37,8 @@ const Profile = (props: Props) => {
       const photoURL: string = await fileRef.getDownloadURL();
       setUser({photoURL});
       const currentUser = fire.auth().currentUser;
-      currentUser?.updateProfile({photoURL}).then(() => {
-        setUser(currentUser);
-      });
+      await currentUser?.updateProfile({photoURL});
+      setUser(currentUser);
     };
   };
 
@@ -51,7 +50,8 @@ const Profile = (props: Props) => {
       </div>
       {previewError && <span className="preview-error">Format of this file is not supported</span>}
       <div className="preview-container">
-        {imagePreview ? (
+        {imagePreview 
+          ? (
           <img className="preview-image" src={imagePreview?.toString()} alt="img-preview"></img>
         ) : (
           <span className="preview-text">Upload The Image</span>
