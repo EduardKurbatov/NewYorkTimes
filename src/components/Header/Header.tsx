@@ -33,7 +33,7 @@ const Home = (props: Props) => {
       <h1 className="header" onClick={() => {history.push('/main')}}>NY Times</h1>
       {user ? (
           <div className="exist-user">
-            <img className="user-avatar" src={userPhoto || defaultPhoto} alt={''} /> 
+            <img className="user-avatar" src={userPhoto || defaultPhoto} alt="" /> 
             {hasAccount &&
               <li className="drop-down">
                 <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>

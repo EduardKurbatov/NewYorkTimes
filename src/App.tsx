@@ -47,11 +47,7 @@ const App: FC = () => {
                 setHasAccount={setHasAccount} 
              />}
         ></Route>
-        <Route 
-          path="/profile" 
-          component={() => 
-          <Profile setUser={setUser}/>}>
-        </Route>
+        <Route path="/profile" component={() => <Profile setUser={setUser}/>}></Route>
       </div>
     </BrowserRouter>
   );

@@ -12,10 +12,10 @@ const Profile = (props: Props) => {
   const [userImg, setUserImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);
+  const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
-    const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
     if (file && ALLOWED_TYPES.includes(file.type)) {
       const reader = new FileReader();
       reader.onloadend = (() => {
