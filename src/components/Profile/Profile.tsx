@@ -7,8 +7,7 @@ interface Props {
   setUser: (value: React.SetStateAction<any>) => void,
 }
 
-const Profile = (props: Props) => {
-  const {setUser} = props;
+const Profile = ({setUser}: Props) => {
   const [userImg, setUserImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);

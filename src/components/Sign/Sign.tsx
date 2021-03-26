@@ -58,7 +58,7 @@ const Sign = () => {
     validatePassword();
     validateConfirmedPassword();
     validDataListener();
-    if(validUserData) {
+    if (validUserData) {
       clearErrors();
       createUser(email, password).then(() => {
         successSignIn();

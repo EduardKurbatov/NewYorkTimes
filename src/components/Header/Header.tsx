@@ -11,8 +11,7 @@ interface Props {
   setHasAccount: (value: React.SetStateAction<boolean>) => void
 }
 
-const Home = (props: Props) => {
-  const {setUser, setHasAccount, user, hasAccount} = props;
+const Header = ({setUser, setHasAccount, user, hasAccount}: Props) => {
   const [userPhoto, setUserPhoto] = useState<string | null | undefined>('');
   const history = useHistory();
 
@@ -48,4 +47,4 @@ const Home = (props: Props) => {
   );
 };
 
-export default Home;
+export default Header;

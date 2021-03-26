@@ -5,12 +5,11 @@ interface Props {
   setErrorMessages: (value: React.SetStateAction<string[] | null>) => void
 }
 
-function ErrorModal(props: Props) {
-  const {errorMessages, setErrorMessages} = props;
+function ErrorModal({errorMessages, setErrorMessages}: Props) {
 
   const closeModal = () => {
     setErrorMessages(null);
-  }
+  };
 
   return (
     <div className="error-whindow">
