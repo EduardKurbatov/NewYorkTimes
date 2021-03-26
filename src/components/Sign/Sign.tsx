@@ -1,27 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
 
-interface Props {
-  hasAccount: Boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void
-}
-
-const Sign =(props: Props) => {
-  const {hasAccount, setHasAccount} = props;
+const Sign = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
   const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
-  const [validEmail, setValidEmail] = useState<boolean>(false);
-  const [validEmailErr, setValidEmailErr] = useState<string>('');
-  const [validPassWord, setValidPassWord] = useState<boolean>(false);
-  const [validPassErr, setValidPassErr] = useState<string>('');
-  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(false);
-  const [confirmedPassErr, setConfirmedPassErr] = useState<string>('');
+  const [validEmail, setValidEmail] = useState<boolean>(true);
+  const [validPassWord, setValidPassWord] = useState<boolean>(true);
+  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(true);
   const [validUserData, setValidUserData] = useState<boolean>(false);
+  const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
 
@@ -41,7 +33,7 @@ const Sign =(props: Props) => {
   };
 
   const changeSign = (): void => {
-    setHasAccount(!hasAccount);
+    setAccountWasCreated(!accountWasCreated);
     clearInputs();
   }
 
@@ -62,19 +54,10 @@ const Sign =(props: Props) => {
   };
 
   const handleSignUp = (): void => {
-    switch(false) {
-      case validEmail :  
-      setValidEmailErr('email must be in valid format');
-      break;
-      case validPassWord:
-      setValidPassErr('Password must contain at least 8 characters,including UPPER/lowercase and numbers');
-      break;
-      case validConfirmedPassword:
-      setConfirmedPassErr('Confirmed password is not the same as password');
-      break;
-      default: setValidUserData(true);
-    };
-
+    validateEmail();
+    validatePassword();
+    validateConfirmedPassword();
+    validDataListener();
     if(validUserData) {
       clearErrors();
       createUser(email, password).then(() => {
@@ -94,17 +77,10 @@ const Sign =(props: Props) => {
       });
     };
 
-  useEffect(() => {
-    validateEmail();
-    validatePassword();
-    validateConfirmedPassword();
-    validDataListener();
-  });
-
   return (
     <div className="login">
       <div className="loginContainer">
-        <h1 className="heading">{hasAccount ? "Sign Up" : "Sign In"}</h1>
+        <h1 className="heading">{accountWasCreated ? "Sign Up" : "Sign In"}</h1>
         <label>User Email</label>
         <input
           type="text"
@@ -112,8 +88,9 @@ const Sign =(props: Props) => {
           required
           value={email}
           onChange={e => setEmail(e.target.value)}
+          onFocus={() => {setValidEmail(true)}}
         />
-        <p className="err-msg">{validEmail && validEmailErr}</p>
+        {!validEmail && <p className="err-msg">email must be in valid format</p>}
         <label>Password</label>
         <input
           type="password"
@@ -121,10 +98,11 @@ const Sign =(props: Props) => {
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
+          onFocus={() => {setValidPassWord(true)}}
         />
-        {hasAccount && (
-          <>
-        <p className="err-msg">{validPassErr}</p>
+        {accountWasCreated && (
+        <>
+        {!validPassWord && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
         <label>Confirm The Password</label>
         <input
           type="password"
@@ -132,17 +110,18 @@ const Sign =(props: Props) => {
           required
           value={confirmedPassword}
           onChange={e => setConfirmedPassword(e.target.value)}
+          onFocus={() => {setValidConfirmedPassword(true)}}
         />
-        {confirmedPassErr ? (<p className="err-msg">{confirmedPassErr}</p>) : (<></>)}
+        {!validConfirmedPassword && <p className="err-msg">Confirmed password is not the same as password</p>}
         </>
         )}
         <div className="btn-container">
-          <button className="sign-btn" onClick={hasAccount ? handleSignUp : handleSignIn}>
-            Sign {hasAccount ? "Up" : "In"}
+          <button className="sign-btn" onClick={accountWasCreated ? handleSignUp : handleSignIn}>
+            Sign {accountWasCreated ? "Up" : "In"}
           </button>
           <p>
-            {hasAccount ? "Allready have an account ?" : "Don't have an account ?"}
-            <span onClick={changeSign}>Sign {hasAccount ? "In" : "Up"}</span>
+            {accountWasCreated ? "Allready have an account ?" : "Don't have an account ?"}
+            <span onClick={changeSign}>Sign {accountWasCreated ? "In" : "Up"}</span>
           </p>
         </div>
         {errorMessages && 

@@ -42,10 +42,7 @@ const App: FC = () => {
         <Route
           path="/sign"
           component={() =>
-             <Sign 
-                hasAccount={hasAccount}
-                setHasAccount={setHasAccount} 
-             />}
+             <Sign />}
         ></Route>
         <Route path="/profile" component={() => <Profile setUser={setUser}/>}></Route>
       </div>
