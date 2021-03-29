@@ -13,14 +13,14 @@ function Main() {
   };
 
   const getArticles = async (): Promise<void> => {
-      const response = await fetch(url, options);
-      if (response?.ok) {
-        const articles = await response.json();
-        setArticles(articles.results);
-      } else {
-        throw new Error(response.statusText);
-      }
-    };
+    const response = await fetch(url, options);
+    if (response?.ok) {
+      const articles = await response.json();
+      setArticles(articles.results);
+    } else {
+      throw new Error(response.statusText);
+    }
+  };
 
   return (
     <div className="main-page">

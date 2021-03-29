@@ -38,13 +38,15 @@ const App: FC = () => {
           hasAccount={hasAccount}
           setHasAccount={setHasAccount} 
         />
-        <Route path="/main" component={Main}></Route>
-        <Route
-          path="/sign"
-          component={() =>
-             <Sign />}
-        ></Route>
-        <Route path="/profile" component={() => <Profile setUser={setUser}/>}></Route>
+        <Route path="/main">
+          <Main />
+        </Route>
+        <Route path="/sign">
+          <Sign />
+        </Route>
+        <Route path="/profile">
+          <Profile setUser={setUser} />
+        </Route>
       </div>
     </BrowserRouter>
   );

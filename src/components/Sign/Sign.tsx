@@ -16,7 +16,6 @@ const Sign = () => {
   const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?!.*[&%$]).{8,}$/;
-
   const history = useHistory();
 
   const successSignIn = (): void => {
@@ -35,7 +34,7 @@ const Sign = () => {
   const changeSign = (): void => {
     setAccountWasCreated(!accountWasCreated);
     clearInputs();
-  }
+  };
 
   const validateEmail = () => {
     return setValidEmail(emailRegex.test(String(email).toLowerCase()));
@@ -58,13 +57,14 @@ const Sign = () => {
     validatePassword();
     validateConfirmedPassword();
     validDataListener();
+
     if (validUserData) {
       clearErrors();
       createUser(email, password).then(() => {
         successSignIn();
-        }).catch(err => {
-          setErrorMessages(err.message);
-        });
+      }).catch(err => {
+        setErrorMessages(err.message);
+      });
     }; 
   };
 
@@ -72,10 +72,10 @@ const Sign = () => {
     clearErrors();
     initLogin(email, password).then(() => {
       successSignIn();
-      }).catch(err => {
-        setErrorMessages(err.message);
-      });
-    };
+    }).catch(err => {
+      setErrorMessages(err.message);
+    });
+  };
 
   return (
     <div className="login">
@@ -102,26 +102,26 @@ const Sign = () => {
         />
         {accountWasCreated && (
         <>
-        {!validPassWord && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
-        <label>Confirm The Password</label>
-        <input
-          type="password"
-          placeholder="Confirm the password"
-          required
-          value={confirmedPassword}
-          onChange={e => setConfirmedPassword(e.target.value)}
-          onFocus={() => {setValidConfirmedPassword(true)}}
+          {!validPassWord && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
+          <label>Confirm The Password</label>
+          <input
+            type="password"
+            placeholder="Confirm the password"
+            required
+            value={confirmedPassword}
+            onChange={e => setConfirmedPassword(e.target.value)}
+            onFocus={() => {setValidConfirmedPassword(true)}}
         />
-        {!validConfirmedPassword && <p className="err-msg">Confirmed password is not the same as password</p>}
+          {!validConfirmedPassword && <p className="err-msg">Confirmed password is not the same as password</p>}
         </>
         )}
         <div className="btn-container">
           <button className="sign-btn" onClick={accountWasCreated ? handleSignUp : handleSignIn}>
-            Sign {accountWasCreated ? "Up" : "In"}
+            Sign {accountWasCreated ? 'Up' : 'In'}
           </button>
           <p>
-            {accountWasCreated ? "Allready have an account ?" : "Don't have an account ?"}
-            <span onClick={changeSign}>Sign {accountWasCreated ? "In" : "Up"}</span>
+            {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
+            <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
         </div>
         {errorMessages && 
