@@ -51,7 +51,7 @@ const Profile = ({setUser}: Props) => {
       <div className="preview-container">
         {imagePreview 
           ? (
-          <img className="preview-image" src={imagePreview.toString()} alt="Uploaded img preview"></img>
+          <img className="preview-image" src={imagePrevie.toString()} alt="Uploaded img preview"></img>
         ) : (<span className="preview-text">Upload The Image</span>)}
       </div>
     </div>
