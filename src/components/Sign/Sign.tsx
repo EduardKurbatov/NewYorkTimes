@@ -80,7 +80,7 @@ const Sign = () => {
   return (
     <div className="login">
       <div className="loginContainer">
-        <h1 className="heading">{accountWasCreated ? "Sign Up" : "Sign In"}</h1>
+        <h1 className="heading">{accountWasCreated ? 'Sign Up' : 'Sign In'}</h1>
         <label>User Email</label>
         <input
           type="text"
@@ -90,15 +90,15 @@ const Sign = () => {
           onChange={e => setEmail(e.target.value)}
           onFocus={() => {setValidEmail(true)}}
         />
-        {!validEmail && <p className="err-msg">email must be in valid format</p>}
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Enter the password"
-          required
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          onFocus={() => {setValidPassWord(true)}}
+          {!validEmail && <p className="err-msg">email must be in valid format</p>}
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter the password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onFocus={() => {setValidPassWord(true)}}
         />
         {accountWasCreated && (
         <>

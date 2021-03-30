@@ -19,14 +19,14 @@ const App: FC = () => {
         setHasAccount(true);
       } else {
         setUser({});
-      } ;
+      }
     });
   };  
 
   useEffect(() => {
     authListener();
   }, []);
-  
+
   useEffect(() => {}, [user]);
 
   return (
@@ -45,7 +45,7 @@ const App: FC = () => {
           <Sign />
         </Route>
         <Route path="/profile">
-          <Profile setUser={setUser} />
+          <Profile user={user} setUser={setUser} />
         </Route>
       </div>
     </BrowserRouter>

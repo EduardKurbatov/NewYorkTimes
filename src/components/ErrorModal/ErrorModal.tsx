@@ -6,7 +6,6 @@ interface Props {
 }
 
 function ErrorModal({errorMessages, setErrorMessages}: Props) {
-
   const closeModal = () => {
     setErrorMessages(null);
   };

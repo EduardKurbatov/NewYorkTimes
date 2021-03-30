@@ -4,10 +4,11 @@ import { useState } from 'react';
 import '@firebase/storage';
 
 interface Props {
+  user: any,
   setUser: (value: React.SetStateAction<any>) => void,
 }
 
-const Profile = ({setUser}: Props) => {
+const Profile = ({user, setUser}: Props) => {
   const [userImg, setUserImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);
@@ -25,7 +26,9 @@ const Profile = ({setUser}: Props) => {
       setPreviewError(false);
     } else {
       setPreviewError(true);
-    };
+    }
+
+    e.target.value = '';
   };
 
   const uploadAvatar = async (): Promise<void> => {
@@ -38,21 +41,22 @@ const Profile = ({setUser}: Props) => {
       const currentUser = fire.auth().currentUser;
       await currentUser?.updateProfile({photoURL});
       setUser(currentUser);
-    };
+      setImagePreview(null);
+    }
   };
 
   return (
     <div className="profile-page">
       <div className="file-upload">
-        <input type = "file" onChange={onFileUpload}/>
+        <input type="file" onChange={onFileUpload}/>
         <button onClick={uploadAvatar} disabled={!userImg}>Upload</button>
       </div>
       {previewError && <span className="preview-error">Format of this file is not supported</span>}
       <div className="preview-container">
         {imagePreview 
-          ? (
-          <img className="preview-image" src={imagePreview.toString()} alt="Uploaded preview"></img>
-        ) : (<span className="preview-text">Upload The Image</span>)}
+          ? (<img className="preview-image" src={imagePreview.toString()} alt="Uploaded preview"></img>)
+          : (<span className="preview-text">Upload The Image</span>)
+        }
       </div>
     </div>
   )
