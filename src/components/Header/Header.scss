@@ -14,15 +14,17 @@
     }
     .exist-user {
       position: relative;
+      display: flex;
+      justify-content: center;
       margin-right: 20px;
       width: 50px;
       background: #fff;
       border-radius: 50%;
-      text-align: center;
         .user-avatar {
-          width: 45px;
-          height: 45px;
           border-radius: 50%;
+          overflow: hidden;
+          object-fit: cover;
+          min-height: 100%;
         }
         .drop-down {
           position: absolute;
