@@ -112,7 +112,7 @@ const Sign = () => {
             value={confirmedPassword}
             onChange={e => setConfirmedPassword(e.target.value)}
             onFocus={() => {setValidConfirmedPassword(true)}}
-        />
+          />
           {!validConfirmedPassword && <p className="err-msg">Confirmed password is not the same as password</p>}
         </>
         )}
