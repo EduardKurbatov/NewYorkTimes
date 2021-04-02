@@ -36,15 +36,15 @@ const Sign = () => {
     clearInputs();
   };
 
-  const validateEmail = () => {
+  const validateEmail = (): void => {
     return setValidEmail(emailRegex.test(String(email).toLowerCase()));
-};
+  };
 
-  const validatePassword = () => {
+  const validatePassword = (): void => {
     return setValidPassWord(passwordRegex.test(password));
   };
 
-  const validateConfirmedPassword = () => {
+  const validateConfirmedPassword = (): void => {
     return setValidConfirmedPassword(password === confirmedPassword);
   };
 
@@ -90,15 +90,15 @@ const Sign = () => {
           onChange={e => setEmail(e.target.value)}
           onFocus={() => {setValidEmail(true)}}
         />
-          {!validEmail && <p className="err-msg">email must be in valid format</p>}
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter the password"
-            required
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            onFocus={() => {setValidPassWord(true)}}
+        {!validEmail && <p className="err-msg">email must be in valid format</p>}
+        <label>Password</label>
+        <input
+          type="password"
+          placeholder="Enter the password"
+          required
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          onFocus={() => {setValidPassWord(true)}}
         />
         {accountWasCreated && (
         <>

@@ -7,7 +7,7 @@ import "cropperjs/dist/cropper.css";
 interface Props {
   user: any,
   setUser: (value: React.SetStateAction<any>) => void
-}
+};
 
 const Profile = ({setUser}: Props) => {
   const [userImg, setUserImg] = useState<File | null>(null);
@@ -41,16 +41,16 @@ const Profile = ({setUser}: Props) => {
   };
 
   const uploadAvatar = async (blob: Blob): Promise<void> => {
-      const storageRef = fire.storage().ref();
-      const fileRef = storageRef.child(`images/${userImg?.name}>`);
-      await fileRef.put(blob);
-      const photoURL: string = await fileRef.getDownloadURL();
-      setUser({photoURL});
-      const currentUser = fire.auth().currentUser;
-      await currentUser?.updateProfile({photoURL});
-      setUser(currentUser);
-      setImagePreview(null);
-      setUserImg(null);
+    const storageRef = fire.storage().ref();
+    const fileRef = storageRef.child(`images/${userImg?.name}>`);
+    await fileRef.put(blob);
+    const photoURL: string = await fileRef.getDownloadURL();
+    setUser({photoURL});
+    const currentUser = fire.auth().currentUser;
+    await currentUser?.updateProfile({photoURL});
+    setUser(currentUser);
+    setImagePreview(null);
+    setUserImg(null);
   };
 
   return (
