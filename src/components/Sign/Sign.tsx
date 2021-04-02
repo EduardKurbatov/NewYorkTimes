@@ -13,7 +13,7 @@ const Sign = () => {
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
   const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
   const [validEmail, setValidEmail] = useState<boolean>(true);
-  const [validPassWord, setValidPassWord] = useState<boolean>(true);
+  const [validPassword, setValidPassword] = useState<boolean>(true);
   const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(true);
   const [validUserData, setValidUserData] = useState<boolean>(false);
   const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const Sign = () => {
   };
 
   const validatePassword = (): void => {
-    return setValidPassWord(passwordRegex.test(password));
+    return setValidPassword(passwordRegex.test(password));
   };
 
   const validateConfirmedPassword = (): void => {
@@ -50,7 +50,7 @@ const Sign = () => {
   };
 
   const validDataListener = (): void => {
-    setValidUserData(validEmail && validPassWord && validConfirmedPassword);
+    setValidUserData(validEmail && validPassword && validConfirmedPassword);
   };
 
   const handleSignUp = (): void => {
@@ -99,11 +99,11 @@ const Sign = () => {
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
-          onFocus={() => {setValidPassWord(true)}}
+          onFocus={() => {setValidPassword(true)}}
         />
         {accountWasCreated && (
         <>
-          {!validPassWord && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
+          {!validPassword && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
           <label>Confirm The Password</label>
           <input
             type="password"
