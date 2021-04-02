@@ -36,7 +36,6 @@ const Profile = ({setUser}: Props) => {
   const getCropData = () => {
     cropper.getCroppedCanvas().toBlob((blob: Blob) => {
       uploadAvatar(blob);
-      console.log(blob);
     });
   };
 
@@ -80,7 +79,7 @@ const Profile = ({setUser}: Props) => {
             checkOrientation={false}
             onInitialized={(cropper) => {setCropper(cropper);}}
           />
-          ) : ((<span className="preview-text">Upload The Image</span>))
+          ) : (<span className="preview-text">Upload The Image</span>)
         }
       </div>
     </div>
