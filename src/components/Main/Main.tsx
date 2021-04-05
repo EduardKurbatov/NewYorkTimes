@@ -2,15 +2,16 @@ import './Main.scss';
 import { useState } from 'react';
 import { Article } from '../types';
 
+const url = 'https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=oLLGAGDyC2xECFJqIDKqxlczH0fE3gGO';
+const options = {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json'
+  },
+};
+
 function Main() {
   const [articles, setArticles] = useState<Article[]>([]);
-  const url = 'https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=oLLGAGDyC2xECFJqIDKqxlczH0fE3gGO';
-  const options = {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json'
-    },
-  };
 
   const getArticles = async (): Promise<void> => {
     const response = await fetch(url, options);

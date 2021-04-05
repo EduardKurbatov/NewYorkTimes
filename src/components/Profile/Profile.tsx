@@ -64,23 +64,24 @@ const Profile = ({setUser}: Props) => {
       </div>
       {previewError && <span className="preview-error">Format of this file is not supported</span>}
       <div className="preview-container">
-        {imagePreview ?(
-          <Cropper
-            zoomTo={0}
-            initialAspectRatio={1}
-            preview=".img-preview"
-            src={imagePreview.toString()}
-            viewMode={1}
-            guides={true}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            checkOrientation={false}
-            onInitialized={(cropper) => {setCropper(cropper);}}
-          />
-          ) : (<span className="preview-text">Upload The Image</span>)
+        {imagePreview 
+          ? (
+            <Cropper
+              zoomTo={0}
+              initialAspectRatio={1}
+              preview=".img-preview"
+              src={imagePreview.toString()}
+              viewMode={1}
+              guides={true}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={false}
+              responsive={true}
+              autoCropArea={1}
+              checkOrientation={false}
+              onInitialized={(cropper) => {setCropper(cropper);}}
+            />
+        ) : (<span className="preview-text">Upload The Image</span>)
         }
       </div>
     </div>
