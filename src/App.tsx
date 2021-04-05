@@ -39,9 +39,6 @@ const App: FC = () => {
           setHasAccount={setHasAccount} 
         />
         <Route exact path="/">
-          <Redirect to="/main" />
-        </Route>
-        <Route path="/main">
           <Main />
         </Route>
         <Route path="/sign">

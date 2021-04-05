@@ -20,7 +20,7 @@ const Sign = () => {
   const history = useHistory();
 
   const successSignIn = (): void => {
-    history.push('/main');
+    history.push('/');
   };
 
   const clearErrors = (): void => {

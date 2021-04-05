@@ -29,7 +29,7 @@ const Header = ({setUser, setHasAccount, user, hasAccount}: Props) => {
 
   return (
     <div className="header-container">
-      <h1 className="header" onClick={() => {history.push('/main')}}>NY Times</h1>
+      <h1 className="header" onClick={() => {history.push('/')}}>NY Times</h1>
       {user ? (
           <div className="exist-user">
             <img className="user-avatar" src={userPhoto || defaultPhoto} alt="" /> 
