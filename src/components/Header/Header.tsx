@@ -18,15 +18,15 @@ const Header = ({setUser, setHasAccount, user, hasAccount}: Props) => {
   const handleLogOut = (): void => {
     fire.auth().signOut();
     localStorage.clear();
-    setUser({});
     setHasAccount(false);
+    setUser(null);
     history.push('/sign');
-  };  
+  };
 
   useEffect(() => {
     setUserPhoto(user ? fire.auth().currentUser?.photoURL : null);
   }, [user]);
-  
+
   return (
     <div className="header-container">
       <h1 className="header" onClick={() => {history.push('/main')}}>NY Times</h1>

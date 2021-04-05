@@ -34,6 +34,8 @@ const Sign = () => {
 
   const changeSign = (): void => {
     setAccountWasCreated(!accountWasCreated);
+    setValidEmail(true);
+    setValidPassword(true);
     clearInputs();
   };
 
