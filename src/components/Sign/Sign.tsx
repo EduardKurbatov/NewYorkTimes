@@ -1,22 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
 const Sign = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
   const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
-  const [validEmail, setValidEmail] = useState<boolean>(true);
-  const [validPassword, setValidPassword] = useState<boolean>(true);
-  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(true);
+  const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(false);
   const [validUserData, setValidUserData] = useState<boolean>(false);
   const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [confirmedPasswordError, setConfirmedPasswordError] = useState<string | null>(null);
   const history = useHistory();
 
   const successSignIn = (): void => {
@@ -30,13 +33,17 @@ const Sign = () => {
   const clearInputs = (): void => {
     setEmail('');
     setPassword('');
+    setConfirmedPassword('');
   };
 
   const changeSign = (): void => {
     setAccountWasCreated(!accountWasCreated);
-    setValidEmail(true);
-    setValidPassword(true);
     clearInputs();
+    setValidPassword(false);
+    setValidEmail(false);
+    setPasswordError(null);
+    setEmailError(null);
+    setConfirmedPasswordError(null)
   };
 
   const validateEmail = (): void => {
@@ -52,14 +59,12 @@ const Sign = () => {
   };
 
   const validDataListener = (): void => {
-    setValidUserData(validEmail && validPassword && validConfirmedPassword);
+    return setValidUserData(validEmail && validPassword && validConfirmedPassword);
   };
 
   const handleSignUp = (): void => {
-    validateEmail();
-    validatePassword();
-    validateConfirmedPassword();
     validDataListener();
+    errorlistener();
 
     if (validUserData) {
       clearErrors();
@@ -72,13 +77,49 @@ const Sign = () => {
   };
 
   const handleSignIn = (): void => {
-    clearErrors();
-    initLogin(email, password).then(() => {
-      successSignIn();
-    }).catch(err => {
-      setErrorMessages(err.message);
-    });
+    errorlistener();
+
+    if (validEmail && validPassword) {
+      clearErrors();
+      initLogin(email, password).then(() => {
+        successSignIn();
+      }).catch(err => {
+        setErrorMessages(err.message);
+      });
+    }
   };
+
+  const errorlistener = (): void => {
+    if (!validEmail) {
+      setEmailError('email must be in valid format');
+     };
+
+    if (!validPassword) {
+      setPasswordError('Password must contain at least 6  characters,including UPPER/lowercase and numbers')
+    };
+
+    if (!validConfirmedPassword) {
+      setConfirmedPasswordError('Confirmed password is not the same as password');
+    };
+
+    if (email === '') {
+      setEmailError('Field must be required');
+    };
+
+    if (password === '') {
+      setPasswordError('Field must be required');
+    };
+
+    if (confirmedPassword === '') {
+      setConfirmedPasswordError('Field must be required');
+    };
+  };
+
+  useEffect(() => {
+    validateEmail();
+    validatePassword();
+    validateConfirmedPassword();
+  });
 
   return (
     <div className="login">
@@ -91,9 +132,9 @@ const Sign = () => {
           required
           value={email}
           onChange={e => setEmail(e.target.value)}
-          onFocus={() => {setValidEmail(true)}}
+          onFocus={() => {setEmailError(null)}}
         />
-        {!validEmail && <p className="err-msg">email must be in valid format</p>}
+        {emailError && <p className="err-msg">{emailError}</p>}
         <label>Password</label>
         <input
           type="password"
@@ -101,11 +142,11 @@ const Sign = () => {
           required
           value={password}
           onChange={e => setPassword(e.target.value)}
-          onFocus={() => {setValidPassword(true)}}
+          onFocus={() => {setPasswordError(null)}}
         />
+        {passwordError && <p className="err-msg">{passwordError}</p>}
         {accountWasCreated && (
         <>
-          {!validPassword && <p className="err-msg">Password must contain at least 8 characters,including UPPER/lowercase and numbers</p>}
           <label>Confirm The Password</label>
           <input
             type="password"
@@ -113,9 +154,9 @@ const Sign = () => {
             required
             value={confirmedPassword}
             onChange={e => setConfirmedPassword(e.target.value)}
-            onFocus={() => {setValidConfirmedPassword(true)}}
+            onFocus={() => {setConfirmedPasswordError(null)}}
           />
-          {!validConfirmedPassword && <p className="err-msg">Confirmed password is not the same as password</p>}
+          {confirmedPasswordError && <p className="err-msg">{confirmedPasswordError}</p>}
         </>
         )}
         <div className="btn-container">
