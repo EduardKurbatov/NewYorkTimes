@@ -3,7 +3,7 @@ import fire from '../../fire';
 import React, { useState } from 'react';
 import '@firebase/storage';
 import Cropper from 'react-cropper';
-import "cropperjs/dist/cropper.css";
+import 'cropperjs/dist/cropper.css';
 interface Props {
   user: any,
   setUser: (value: React.SetStateAction<any>) => void
