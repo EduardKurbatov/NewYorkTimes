@@ -3,67 +3,66 @@ import { useHistory } from 'react-router-dom';
 import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
+import firebase from 'firebase';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
+type userAuthParams = {
+  email: string,
+  password: string,
+  authFunc: (email: string, password: string) => Promise<firebase.auth.UserCredential>
+};
+
 type Field = {
   value: string,
   isValid: () => boolean,
-  error: boolean,
+  displayError: boolean,
   errorMessage: string,
 };
 
-type ConfirmField = {
-    value: string,
-    error: boolean,
-    errorMessage: string
-};
-
-const defaultEmailState = {
+const defaultEmailState: Field = {
   value: '',
   isValid: function() { 
     return emailRegex.test(this.value.toLowerCase());
   },
-  error: false,
+  displayError: false,
   errorMessage: 'email must be in valid format'
 };
 
-const defaultPasswordState = {
+const defaultPasswordState: Field = {
   value: '',
   isValid: function() {
     return passwordRegex.test(this.value);
   },
-  error: false,
+  displayError: false,
   errorMessage: 'Password must contain at least 6  characters,including UPPER/lowercase and numbers'
 };
 
-const defaultConfirmedPasswordState = {
+const defaultConfirmedPasswordState: Partial<Field> = {
   value: '',
-  error: false,
+  displayError: false,
   errorMessage: 'Confirmed password is not the same as password'
 };
 
 const Sign = () => {
   const [email, setEmail] = useState<Field>(defaultEmailState);
   const [password, setPassword] = useState<Field>(defaultPasswordState);
-  const [confirmedPassword, setConfirmedPassword] = useState<ConfirmField>(defaultConfirmedPasswordState)
+  const [confirmedPassword, setConfirmedPassword] = useState<Partial<Field>>(defaultConfirmedPasswordState)
   const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
-  const [validConfirmedPassword, setValidConfirmedPassword] = useState<boolean>(false);
-  const [validUserData, setValidUserData] = useState<boolean>(false);
   const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
   const history = useHistory();
 
-  const validateConfirmedPassword = () => {
-    return setValidConfirmedPassword(confirmedPassword.value === password.value);
+  const isSignUpFormValid = () : boolean => {
+    return email.isValid() && password.isValid() && confirmedPassword.value === password.value;
   };
 
-  useEffect(() => {
-    validateConfirmedPassword();
-  });
+  const isSugnInFormValid = () : boolean => {
+    return email.isValid() && password.isValid();
+  };
 
-  const successSignIn = (): void => {
-    history.push('/');
+  const isConfirmedPasswordValid = (): boolean => {
+    return confirmedPassword.value === password.value
   };
 
   const clearErrors = (): void => {
@@ -78,44 +77,38 @@ const Sign = () => {
 
   const changeSign = (): void => {
     setAccountWasCreated(!accountWasCreated);
-    clearInputs();
+    if (isSugnInFormValid()) {
+      clearInputs();
+      console.log('valid');
+    }
   };
 
-  const validDataListener = (): void => {
-    return setValidUserData(email.isValid() && password.isValid() && validConfirmedPassword);
+  const runUserAuth = async ({email, password, authFunc}: userAuthParams): Promise<void> => {
+    try {
+      await authFunc(email, password);
+      history.push('/');
+    } catch (err) {
+      setErrorMessages(err?.message);
+    }
   };
 
   const handleSignUp = (): void => {
-    email.isValid();
-    password.isValid();
-    validDataListener();
-    setEmail({...email, error: !email.isValid()});
-    setPassword({...password, error: !password.isValid()});
-    setConfirmedPassword({...confirmedPassword, error: !validConfirmedPassword});
+    setEmail({...email, displayError: !email.isValid()});
+    setPassword({...password, displayError: !password.isValid()});
+    setConfirmedPassword({...confirmedPassword, displayError: !isConfirmedPasswordValid()});
 
-    if (validUserData) {
+    if (isSignUpFormValid()) {
       clearErrors();
-      createUser(email.value, password.value).then(() => {
-        successSignIn();
-      }).catch(err => {
-        setErrorMessages(err.message);
-      });
-    }; 
+      runUserAuth({email: email.value, password: password.value, authFunc: createUser});      
+    }
   };
 
   const handleSignIn = (): void => {
-    email.isValid();
-    password.isValid();
-    setEmail({...email, error: !email.isValid()});
-    setPassword({...password, error: !password.isValid()});
+    setEmail({...email, displayError: !email.isValid()});
+    setPassword({...password, displayError: !password.isValid()});
 
-    if (email.isValid() && password.isValid()) {
-      clearErrors();
-      initLogin(email.value, password.value).then(() => {
-        successSignIn();
-      }).catch(err => {
-        setErrorMessages(err.message);
-      });
+    if (isSugnInFormValid()) {
+      runUserAuth({email: email.value, password: password.value, authFunc: initLogin});
     }
   };
 
@@ -130,9 +123,9 @@ const Sign = () => {
           required
           value={email?.value}
           onChange={e => setEmail({...email, value: e.target.value})}
-          onFocus={() => {setEmail({...email, error: false})}}
+          onFocus={() => {setEmail({...email, displayError: false})}}
         />
-        {email.error && <p className="err-msg">{email.errorMessage}</p>}
+        {email.displayError && <p className="err-msg">{email.errorMessage}</p>}
         <label>Password</label>
         <input
           type="password"
@@ -140,9 +133,9 @@ const Sign = () => {
           required
           value={password?.value}
           onChange={e => setPassword({...password, value: e.target.value})}
-          onFocus={() => {setPassword({...password, error: false})}}
+          onFocus={() => {setPassword({...password, displayError: false})}}
         />
-        {password.error && <p className="err-msg">{password.errorMessage}</p>}
+        {password.displayError && <p className="err-msg">{password.errorMessage}</p>}
         {accountWasCreated && (
         <>
           <label>Confirm The Password</label>
@@ -151,10 +144,10 @@ const Sign = () => {
             placeholder="Confirm the password"
             required
             value={confirmedPassword?.value}
-            onChange={e => setConfirmedPassword({...confirmedPassword, value: e.target.value})}
-            onFocus={() => {setConfirmedPassword({...confirmedPassword, error: false})}}
+            onChange={e => {setConfirmedPassword({...confirmedPassword, value: e.target.value})}}
+            onFocus={() => {setConfirmedPassword({...confirmedPassword, displayError: false})}}
           />
-          {confirmedPassword.error && <p className="err-msg">{confirmedPassword.errorMessage}</p>}
+          {confirmedPassword.displayError && <p className="err-msg">{confirmedPassword.errorMessage}</p>}
         </>
         )}
         <div className="btn-container">
