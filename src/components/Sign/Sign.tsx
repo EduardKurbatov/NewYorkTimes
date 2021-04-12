@@ -27,7 +27,7 @@ const defaultEmailState: Field = {
     return emailRegex.test(this.value.toLowerCase());
   },
   displayError: false,
-  errorMessage: 'email must be in valid format'
+  errorMessage: 'Email must be in valid format'
 };
 
 const defaultPasswordState: Field = {
@@ -48,7 +48,7 @@ const defaultConfirmedPasswordState: Partial<Field> = {
 const Sign = () => {
   const [email, setEmail] = useState<Field>(defaultEmailState);
   const [password, setPassword] = useState<Field>(defaultPasswordState);
-  const [confirmedPassword, setConfirmedPassword] = useState<Partial<Field>>(defaultConfirmedPasswordState)
+  const [confirmedPassword, setConfirmedPassword] = useState<Partial<Field>>(defaultConfirmedPasswordState);
   const [errorMessages, setErrorMessages] = useState<string[] | null>(null);
   const [accountWasCreated, setAccountWasCreated] = useState<boolean>(false);
   const history = useHistory();
@@ -62,7 +62,7 @@ const Sign = () => {
   };
 
   const isConfirmedPasswordValid = (): boolean => {
-    return confirmedPassword.value === password.value
+    return confirmedPassword.value === password.value;
   };
 
   const clearErrors = (): void => {
@@ -79,7 +79,6 @@ const Sign = () => {
     setAccountWasCreated(!accountWasCreated);
     if (isSugnInFormValid()) {
       clearInputs();
-      console.log('valid');
     }
   };
 
@@ -99,7 +98,7 @@ const Sign = () => {
 
     if (isSignUpFormValid()) {
       clearErrors();
-      runUserAuth({email: email.value, password: password.value, authFunc: createUser});      
+      runUserAuth({email: email.value, password: password.value, authFunc: createUser});
     }
   };
 
