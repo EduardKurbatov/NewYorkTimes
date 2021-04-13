@@ -45,7 +45,12 @@ const defaultConfirmedPasswordState: Partial<Field> = {
   errorMessage: 'Confirmed password is not the same as password'
 };
 
-const Sign = () => {
+interface Props {
+  user: any,
+  setUser: (value: React.SetStateAction<any>) => void,
+}
+
+const Sign = ({setUser, user} : Props) => {
   const [email, setEmail] = useState<Field>(defaultEmailState);
   const [password, setPassword] = useState<Field>(defaultPasswordState);
   const [confirmedPassword, setConfirmedPassword] = useState<Partial<Field>>(defaultConfirmedPasswordState);
@@ -157,6 +162,8 @@ const Sign = () => {
             {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
             <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
+        <button onClick={loginWithGoogleAccount}>Google login</button>
+        <button onClick={loginWithfaceBookAccount}>FaceBook login</button>
         </div>
         {errorMessages && 
           <ErrorModal

@@ -9,14 +9,12 @@ import Profile from './components/Profile/Profile';
 
 const App: FC = () => {
   const [user, setUser] = useState<any>(null);
-  const [hasAccount, setHasAccount] = useState<boolean>(false);
 
   const authListener = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
-        setHasAccount(true);
       } else {
         setUser(null);
       }
@@ -35,14 +33,15 @@ const App: FC = () => {
         <Header 
           user={user}
           setUser={setUser}
-          hasAccount={hasAccount}
-          setHasAccount={setHasAccount} 
         />
         <Route exact path="/">
           <Main />
         </Route>
         <Route path="/sign">
-          <Sign />
+          <Sign 
+            user={user}
+            setUser={setUser}
+          />
         </Route>
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />

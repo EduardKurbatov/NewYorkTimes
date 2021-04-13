@@ -7,18 +7,15 @@ import fire from '../../fire';
 interface Props {
   user: any,
   setUser: (value: React.SetStateAction<any>) => void,
-  hasAccount: boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void
 }
 
-const Header = ({setUser, setHasAccount, user, hasAccount}: Props) => {
+const Header = ({setUser, user}: Props) => {
   const [userPhoto, setUserPhoto] = useState<string | null | undefined>('');
   const history = useHistory();
 
   const handleLogOut = (): void => {
     fire.auth().signOut();
     localStorage.clear();
-    setHasAccount(false);
     setUser(null);
     history.push('/sign');
   };
@@ -33,12 +30,10 @@ const Header = ({setUser, setHasAccount, user, hasAccount}: Props) => {
       {user ? (
           <div className="exist-user">
             <img className="user-avatar" src={userPhoto || defaultPhoto} alt="" /> 
-            {hasAccount &&
               <li className="drop-down">
                 <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>
                 <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
               </li>
-            }
           </div>
       ) : (
           <button className="login-btn" onClick={() => {history.push('/sign')}}>Login</button>
