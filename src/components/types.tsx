@@ -1,5 +1,3 @@
-import firebase from 'firebase';
-
 export type MediaAsset = {
   url: string,
   format: string,
@@ -41,15 +39,3 @@ export type Article = {
   url: string
 };
 
-export type Field = {
-  value: string,
-  isValid: () => boolean,
-  displayError: boolean,
-  errorMessage: string,
-};
-
-export type userAuthParams = {
-  email: string,
-  password: string,
-  authFunc: (email: string, password: string) => Promise<firebase.auth.UserCredential>
-};
