@@ -3,23 +3,10 @@ import { useHistory } from 'react-router-dom';
 import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
-import firebase from 'firebase';
+import { Field, userAuthParams } from '../types';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{6,}$/;
-
-type userAuthParams = {
-  email: string,
-  password: string,
-  authFunc: (email: string, password: string) => Promise<firebase.auth.UserCredential>
-};
-
-type Field = {
-  value: string,
-  isValid: () => boolean,
-  displayError: boolean,
-  errorMessage: string,
-};
 
 const defaultEmailState: Field = {
   value: '',
