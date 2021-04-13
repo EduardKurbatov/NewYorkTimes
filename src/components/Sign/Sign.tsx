@@ -116,6 +116,32 @@ const Sign = ({setUser, user} : Props) => {
     }
   };
 
+  const loginWithGoogleAccount = (): void => { 
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().useDeviceLanguage();
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result: any) => {
+        setUser(result.user);
+        history.push('/');
+      }).catch((error) => {
+        setErrorMessages(error?.message);
+    });
+  };
+
+  const loginWithfaceBookAccount = (): void => {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().useDeviceLanguage();
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result: any) => {
+        setUser(result.user);
+        history.push('/');
+      }).catch((error) => {
+        setErrorMessages(error?.message);
+      });
+  };
+
   return (
     <div className="login">
       <div className="loginContainer">
@@ -162,6 +188,8 @@ const Sign = ({setUser, user} : Props) => {
             {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
             <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
+          <button onClick={loginWithGoogleAccount}>Sign with Goole</button>
+          <button onClick={loginWithfaceBookAccount}>Sign with Facebook</button>
         </div>
         {errorMessages && 
           <ErrorModal
