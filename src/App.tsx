@@ -7,7 +7,6 @@ import Main from './components/Main/Main';
 import fire from './fire';
 import Profile from './components/Profile/Profile';
 
-
 const App: FC = () => {
   const [user, setUser] = useState<any>(null);
   const [hasAccount, setHasAccount] = useState<boolean>(false);

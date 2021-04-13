@@ -12,7 +12,7 @@ type Field = {
   value: string,
   isValid: () => boolean,
   displayError: boolean,
-  errorMessage: string,
+  errorMessage: string
 };
 
 type userAuthParams = {
