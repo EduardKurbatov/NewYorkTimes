@@ -6,7 +6,7 @@ import ErrorModal from '../ErrorModal/ErrorModal';
 import firebase from 'firebase';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
 type userAuthParams = {
   email: string,
@@ -36,7 +36,7 @@ const defaultPasswordState: Field = {
     return passwordRegex.test(this.value);
   },
   displayError: false,
-  errorMessage: 'Password must contain at least 6  characters,including UPPER/lowercase and numbers'
+  errorMessage: 'Password must contain at least 6 characters,including lowercase and numbers'
 };
 
 const defaultConfirmedPasswordState: Partial<Field> = {
@@ -59,14 +59,14 @@ const Sign = ({setUser, user} : Props) => {
   const history = useHistory();
 
   const isSignUpFormValid = () : boolean => {
-    return email.isValid() && password.isValid() && confirmedPassword.value === password.value;
+    return areEmailPasswordValid() && arePasswordsEqual();
   };
 
-  const isSugnInFormValid = () : boolean => {
+  const areEmailPasswordValid = () : boolean => {
     return email.isValid() && password.isValid();
   };
 
-  const isConfirmedPasswordValid = (): boolean => {
+  const arePasswordsEqual = (): boolean => {
     return confirmedPassword.value === password.value;
   };
 
@@ -80,9 +80,10 @@ const Sign = ({setUser, user} : Props) => {
     setConfirmedPassword({...confirmedPassword, value: ''});
   };
 
-  const changeSign = (): void => {
+  const toggleBetweenAuthForms = (): void => {
     setAccountWasCreated(!accountWasCreated);
-    if (isSugnInFormValid()) {
+
+    if (areEmailPasswordValid()) {
       clearInputs();
     }
   };
@@ -99,7 +100,7 @@ const Sign = ({setUser, user} : Props) => {
   const handleSignUp = (): void => {
     setEmail({...email, displayError: !email.isValid()});
     setPassword({...password, displayError: !password.isValid()});
-    setConfirmedPassword({...confirmedPassword, displayError: !isConfirmedPasswordValid()});
+    setConfirmedPassword({...confirmedPassword, displayError: !arePasswordsEqual()});
 
     if (isSignUpFormValid()) {
       clearErrors();
@@ -111,7 +112,8 @@ const Sign = ({setUser, user} : Props) => {
     setEmail({...email, displayError: !email.isValid()});
     setPassword({...password, displayError: !password.isValid()});
 
-    if (isSugnInFormValid()) {
+    if (areEmailPasswordValid()) {
+      clearErrors();
       runUserAuth({email: email.value, password: password.value, authFunc: initLogin});
     }
   };
@@ -160,7 +162,7 @@ const Sign = ({setUser, user} : Props) => {
           </button>
           <p>
             {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
-            <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
+            <span onClick={toggleBetweenAuthForms}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
         </div>
         {errorMessages && 
