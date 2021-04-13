@@ -162,8 +162,6 @@ const Sign = ({setUser, user} : Props) => {
             {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
             <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
-        <button onClick={loginWithGoogleAccount}>Google login</button>
-        <button onClick={loginWithfaceBookAccount}>FaceBook login</button>
         </div>
         {errorMessages && 
           <ErrorModal
