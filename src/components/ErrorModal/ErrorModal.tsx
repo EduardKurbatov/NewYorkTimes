@@ -1,9 +1,9 @@
 import './ErrorModal.scss'
 
-interface Props {
+type Props = {
   errorMessages: string[],
   setErrorMessages: (value: React.SetStateAction<string[] | null>) => void
-}
+};
 
 function ErrorModal({errorMessages, setErrorMessages}: Props) {
   const closeModal = () => {
@@ -15,7 +15,7 @@ function ErrorModal({errorMessages, setErrorMessages}: Props) {
       <p>{errorMessages}</p>
       <button onClick={closeModal}>OK</button>
     </div>
-  )
-}
+  );
+};
 
 export default ErrorModal;

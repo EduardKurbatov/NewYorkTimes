@@ -27,7 +27,7 @@ const defaultEmailState: Field = {
     return emailRegex.test(this.value.toLowerCase());
   },
   displayError: false,
-  errorMessage: 'Email must be in valid format'
+  errorMessage: 'Invalid email format'
 };
 
 const defaultPasswordState: Field = {
@@ -36,21 +36,16 @@ const defaultPasswordState: Field = {
     return passwordRegex.test(this.value);
   },
   displayError: false,
-  errorMessage: 'Password must contain at least 6 characters,including lowercase and numbers'
+  errorMessage: 'Password must contain at least 6 characters, including lowercase and numbers'
 };
 
 const defaultConfirmedPasswordState: Partial<Field> = {
   value: '',
   displayError: false,
-  errorMessage: 'Confirmed password is not the same as password'
+  errorMessage: 'Passwords does not match'
 };
 
-interface Props {
-  user: any,
-  setUser: (value: React.SetStateAction<any>) => void,
-}
-
-const Sign = ({setUser, user} : Props) => {
+const Sign = () => {
   const [email, setEmail] = useState<Field>(defaultEmailState);
   const [password, setPassword] = useState<Field>(defaultPasswordState);
   const [confirmedPassword, setConfirmedPassword] = useState<Partial<Field>>(defaultConfirmedPasswordState);
@@ -85,7 +80,7 @@ const Sign = ({setUser, user} : Props) => {
 
     if (areEmailPasswordValid()) {
       clearInputs();
-    }
+    };
   };
 
   const runUserAuth = async ({email, password, authFunc}: userAuthParams): Promise<void> => {
@@ -105,7 +100,7 @@ const Sign = ({setUser, user} : Props) => {
     if (isSignUpFormValid()) {
       clearErrors();
       runUserAuth({email: email.value, password: password.value, authFunc: createUser});
-    }
+    };
   };
 
   const handleSignIn = (): void => {
@@ -115,7 +110,7 @@ const Sign = ({setUser, user} : Props) => {
     if (areEmailPasswordValid()) {
       clearErrors();
       runUserAuth({email: email.value, password: password.value, authFunc: initLogin});
-    }
+    };
   };
 
   return (
@@ -174,6 +169,6 @@ const Sign = ({setUser, user} : Props) => {
       </div>
     </div>
   );
-}
+};
 
 export default Sign;

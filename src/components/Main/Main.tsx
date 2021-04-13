@@ -20,7 +20,7 @@ function Main() {
       setArticles(articles.results);
     } else {
       throw new Error(response.statusText);
-    }
+    };
   };
 
   return (
@@ -37,7 +37,7 @@ function Main() {
         })}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Main;

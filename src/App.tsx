@@ -7,25 +7,18 @@ import Main from './components/Main/Main';
 import fire from './fire';
 import Profile from './components/Profile/Profile';
 
+
 const App: FC = () => {
   const [user, setUser] = useState<any>(null);
+  const [hasAccount, setHasAccount] = useState<boolean>(false);
 
   const authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        localStorage.setItem('user', JSON.stringify(user));
-      } else {
-        setUser(null);
-      }
-    });
-  };  
+    fire.auth().onAuthStateChanged(setUser);
+  };
 
   useEffect(() => {
     authListener();
   }, []);
-
-  useEffect(() => {}, [user]);
 
   return (
     <BrowserRouter>
@@ -33,15 +26,14 @@ const App: FC = () => {
         <Header 
           user={user}
           setUser={setUser}
+          hasAccount={hasAccount}
+          setHasAccount={setHasAccount}
         />
         <Route exact path="/">
           <Main />
         </Route>
         <Route path="/sign">
-          <Sign 
-            user={user}
-            setUser={setUser}
-          />
+          <Sign />
         </Route>
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
@@ -49,6 +41,6 @@ const App: FC = () => {
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

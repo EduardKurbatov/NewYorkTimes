@@ -5,20 +5,22 @@ import '@firebase/storage';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
-interface Props {
+type Props = {
   user: any,
   setUser: (value: React.SetStateAction<any>) => void
 };
+
+const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
 
 const Profile = ({setUser}: Props) => {
   const [userImg, setUserImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);
-  const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
   const [cropper, setCropper] = useState<any>();
   
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
+
     if (file && ALLOWED_TYPES.includes(file.type)) {
       const reader = new FileReader();
       reader.onloadend = (() => {
@@ -35,9 +37,7 @@ const Profile = ({setUser}: Props) => {
   };
 
   const getCropData = () => {
-    cropper.getCroppedCanvas().toBlob((blob: Blob) => {
-      uploadAvatar(blob);
-    });
+    cropper.getCroppedCanvas().toBlob(uploadAvatar);
   };
 
   const uploadAvatar = async (blob: Blob): Promise<void> => {
@@ -85,7 +85,7 @@ const Profile = ({setUser}: Props) => {
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Profile;
