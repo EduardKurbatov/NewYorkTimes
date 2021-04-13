@@ -6,7 +6,7 @@ import ErrorModal from '../ErrorModal/ErrorModal';
 import firebase from 'firebase';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
 type userAuthParams = {
   email: string,
@@ -129,19 +129,6 @@ const Sign = ({setUser, user} : Props) => {
     });
   };
 
-  const loginWithfaceBookAccount = (): void => {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().useDeviceLanguage();
-    firebase.auth()
-      .signInWithPopup(provider)
-      .then((result: any) => {
-        setUser(result.user);
-        history.push('/');
-      }).catch((error) => {
-        setErrorMessages(error?.message);
-      });
-  };
-
   return (
     <div className="login">
       <div className="loginContainer">
@@ -189,7 +176,6 @@ const Sign = ({setUser, user} : Props) => {
             <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
           <button onClick={loginWithGoogleAccount}>Sign with Goole</button>
-          <button onClick={loginWithfaceBookAccount}>Sign with Facebook</button>
         </div>
         {errorMessages && 
           <ErrorModal
