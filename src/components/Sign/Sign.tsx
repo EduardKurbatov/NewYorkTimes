@@ -69,18 +69,15 @@ const Sign = () => {
     setErrorMessages(null);
   };
 
-  const clearInputs = (): void => {
-    setEmail({...email, value: ''});
-    setPassword({...password, value: ''});
-    setConfirmedPassword({...confirmedPassword, value: ''});
+  const clearInputsAndValidationErrors = (): void => {
+    setPassword({...password, value: '', displayError: false});
+    setEmail({...email, value: '', displayError: false});
+    setConfirmedPassword({...confirmedPassword, value: '', displayError: false});
   };
 
   const toggleBetweenAuthForms = (): void => {
+    clearInputsAndValidationErrors();
     setAccountWasCreated(!accountWasCreated);
-
-    if (areEmailPasswordValid()) {
-      clearInputs();
-    };
   };
 
   const runUserAuth = async ({email, password, authFunc}: userAuthParams): Promise<void> => {

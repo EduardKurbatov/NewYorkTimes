@@ -67,18 +67,15 @@ const Profile = ({setUser}: Props) => {
         {imagePreview 
           ? (
             <Cropper
-              zoomTo={0}
-              initialAspectRatio={1}
-              preview=".img-preview"
+              aspectRatio={1}
               src={imagePreview.toString()}
-              viewMode={1}
-              guides={true}
-              minCropBoxHeight={10}
-              minCropBoxWidth={10}
-              background={false}
+              preview={'.img-preview'}
+              viewMode={3}
+              background={true}
+              autoCropArea={0.3}
+              center={false}
               responsive={true}
-              autoCropArea={1}
-              checkOrientation={false}
+              restore={true}
               onInitialized={(cropper) => {setCropper(cropper);}}
             />
         ) : (<span className="preview-text">Upload The Image</span>)
