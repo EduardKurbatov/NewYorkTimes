@@ -15,6 +15,7 @@ function Main() {
 
   const getArticles = async (): Promise<void> => {
     const response = await fetch(url, options);
+
     if (response?.ok) {
       const articles = await response.json();
       setArticles(articles.results);
