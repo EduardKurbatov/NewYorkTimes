@@ -2,15 +2,15 @@ import './Header.scss';
 import { useHistory } from 'react-router-dom';
 import defaultPhoto from '../../assets/nouserimg.jpg';  
 import fire from '../../fire';
+import firebase from 'firebase';
 
 type Props = {
-  user: any,
-  setUser: (value: React.SetStateAction<any>) => void,
-  hasAccount: boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void,
+  user: firebase.User | null,
+  setUser: (value: React.SetStateAction<firebase.User | null>) => void,
+  userAvatar: string | null | undefined,
 };
 
-const Header = ({setUser, user, hasAccount}: Props) => {
+const Header = ({user, userAvatar}: Props) => {
   const history = useHistory();
 
   const handleLogOut = (): void => {
@@ -23,7 +23,7 @@ const Header = ({setUser, user, hasAccount}: Props) => {
       <h1 className="header" onClick={() => {history.push('/')}}>NY Times</h1>
       {user ? (
         <div className="exist-user">
-          <img className="user-avatar" src={user.photoURL || defaultPhoto} alt="User avatar" />
+          <img className="user-avatar" src={userAvatar || defaultPhoto} alt="User avatar" />
           <div className="drop-down">
             <div className="drop-down-item">
               <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>

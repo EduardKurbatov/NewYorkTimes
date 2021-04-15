@@ -1,18 +1,26 @@
 import './App.scss';
 import { useEffect, useState, FC } from 'react';
-import Sign from './components/Sign/Sign';
 import { BrowserRouter, Route } from 'react-router-dom';
+import fire from './fire';
+import firebase from 'firebase';
+import Sign from './components/Sign/Sign';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
-import fire from './fire';
 import Profile from './components/Profile/Profile';
 
 const App: FC = () => {
-  const [user, setUser] = useState<any>(null);
-  const [hasAccount, setHasAccount] = useState<boolean>(false);
+  const [user, setUser] = useState<firebase.User | null>(null);
+  const [userAvatar, setUserAvatar] = useState<string | null | undefined>(null)
 
   const authListener = () => {
-    fire.auth().onAuthStateChanged(setUser);
+    fire.auth().onAuthStateChanged((user) =>{
+      if (user) {
+        setUser(fire.auth().currentUser);
+        setUserAvatar(fire.auth().currentUser?.photoURL);
+      } else {
+        setUser(null);
+      }
+    })
   };
 
   useEffect(() => {
@@ -25,8 +33,7 @@ const App: FC = () => {
         <Header 
           user={user}
           setUser={setUser}
-          hasAccount={hasAccount}
-          setHasAccount={setHasAccount}
+          userAvatar={userAvatar}
         />
         <Route exact path="/">
           <Main />
@@ -35,7 +42,7 @@ const App: FC = () => {
           <Sign />
         </Route>
         <Route path="/profile">
-          <Profile user={user} setUser={setUser} />
+          <Profile setUser={setUser} setUserAvatar={setUserAvatar} />
         </Route>
       </div>
     </BrowserRouter>
