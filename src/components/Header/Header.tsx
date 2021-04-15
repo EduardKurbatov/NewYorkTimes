@@ -22,15 +22,15 @@ const Header = ({setUser, user, hasAccount}: Props) => {
     <div className="header-container">
       <h1 className="header" onClick={() => {history.push('/')}}>NY Times</h1>
       {user ? (
-          <div className="exist-user">
-            <img className="user-avatar" src={user.photoURL || defaultPhoto} alt="User avatar" />
-            <div className="drop-down">
-              <li className="drop-down-item">
-                <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>
-                <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
-              </li>
-            </div>  
-          </div>
+        <div className="exist-user">
+          <img className="user-avatar" src={user.photoURL || defaultPhoto} alt="User avatar" />
+          <div className="drop-down">
+            <div className="drop-down-item">
+              <button className="drop-down-btn" onClick={() => {history.push('/profile')}}>Profile</button>
+              <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
+            </div>
+          </div>  
+        </div>
       ) : (
           <button className="login-btn" onClick={() => {history.push('/sign')}}>Login</button>
       )}

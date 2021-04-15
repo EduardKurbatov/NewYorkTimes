@@ -69,7 +69,6 @@ const Profile = ({setUser}: Props) => {
             <Cropper
               aspectRatio={1}
               src={imagePreview.toString()}
-              preview={'.img-preview'}
               viewMode={3}
               background={true}
               autoCropArea={0.3}
