@@ -8,6 +8,12 @@ import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Profile from './components/Profile/Profile';
 
+export const enum Routes {
+  MAIN = '/',
+  PROFILE = '/profile',
+  SIGN = '/sign',
+};
+
 const App: FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [userAvatar, setUserAvatar] = useState<string | null | undefined>(null)
@@ -35,13 +41,13 @@ const App: FC = () => {
           setUser={setUser}
           userAvatar={userAvatar}
         />
-        <Route exact path="/">
+        <Route exact path={Routes.MAIN}>
           <Main />
         </Route>
-        <Route path="/sign">
+        <Route path={Routes.SIGN}>
           <Sign />
         </Route>
-        <Route path="/profile">
+        <Route path={Routes.PROFILE}>
           <Profile setUser={setUser} setUserAvatar={setUserAvatar} />
         </Route>
       </div>

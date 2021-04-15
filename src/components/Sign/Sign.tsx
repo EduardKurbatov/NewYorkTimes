@@ -4,6 +4,7 @@ import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import firebase from 'firebase';
+import { Routes } from '../../App';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{6,}$/;
@@ -83,7 +84,7 @@ const Sign = () => {
   const runUserAuth = async ({email, password, authFunc}: userAuthParams): Promise<void> => {
     try {
       await authFunc(email, password);
-      history.push('/');
+      history.push(Routes.MAIN);
     } catch (err) {
       setErrorMessages(err?.message);
     }
