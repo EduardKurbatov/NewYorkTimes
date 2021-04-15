@@ -32,7 +32,7 @@ const Header = ({setUser, user, hasAccount}: Props) => {
           </div>  
         </div>
       ) : (
-          <button className="login-btn" onClick={() => {history.push('/sign')}}>Login</button>
+        <button className="login-btn" onClick={() => {history.push('/sign')}}>Login</button>
       )}
     </div>
   );
