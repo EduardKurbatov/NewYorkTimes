@@ -1,29 +1,59 @@
+$font-color: #fff;
+
 .header-container {
-  position: absolute;
+  position: sticky;
+  z-index: 1;
   top: 0;
   left: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 50px;
-  background: cornflowerblue;
+  height: 60px;
+  background: rgba(63, 81, 181, 1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.84);
   .header {
+    font-family: 'Work Sans';
+    letter-spacing: 1px;
     font-size: 20px;
+    font-weight: 200;
     padding-left: 20px;
+    color: $font-color;
+    cursor: pointer;
+  }
+  .header:hover {
+    opacity: .7;
   }
   .exist-user {
     position: relative;
     display: flex;
     justify-content: center;
-    width: 50px;
+    align-items: center;
+    flex-direction: column;
+    min-width: 100px;
+    height: 100%;
     border-radius: 50%;
-    .user-avatar {
-      border-radius: 50%;
-      overflow: hidden;
-      min-height: 100%;
+    .avatar-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      .ion-chevron-down {
+        color: $font-color;
+        margin-top: 10px;
+        padding-right: 25px;
+        font-size: 12px;
+      }
+      .user-avatar {
+        max-width: 50px;
+        border-radius: 50%;
+        max-height: 50px;
+        overflow: hidden;
+      }
     }
-    .drop-down {
+    .drop-down-items {
       position: absolute;
       top: 100%;
       width: 100%;
@@ -31,24 +61,54 @@
       flex-direction: column;
       list-style: none;
       margin: 0 auto;
-      display: none;
-      .drop-down-btn {
+      display:none;
+      padding-left: 10px;
+      .drop-down-item {
         float: right;
+        min-width: 130px;
+        min-height: 40px;
+        background: #485761;
+        color: $font-color;
+        font-size: 13px;
+        outline: none;
+        border: none;
+        font-family: 'Work Sans';
+        i {
+        font-size: 13px;
+        margin-left: 5px;
+        }
+      }
+      .drop-down-item {
+        border-bottom: 1px solid rgb(49, 48, 48);
+      }
+      .drop-down-item:hover {
+        background:rgba(63, 81, 181, 1);
       }
     }
   }
   .login-btn {
-    margin-right: 20px;
+    margin-right: 10px;
     width: 50px;
-    background: white;
-    border-radius: 50%;
+    background: rgba(63, 81, 181, 1);;
+    height: 50px;
+    font-size: 40px;
     outline: none;
     border: none;
+    color: $font-color;
+    cursor: pointer;
+  }
+  .login-btn:hover {
+    opacity: .7;
   }
 }
 
 .exist-user:hover {
-  .drop-down {
+  .drop-down-items {
     display: block;
+  }
+  .avatar-wrapper {
+    .ion-chevron-down {
+      font-size: 13px;
+    }
   }
 }
