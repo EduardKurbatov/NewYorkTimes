@@ -1,30 +1,51 @@
+$fontColor: #fff;
+
 .profile-page {
+  min-height: 800px;
+  height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin: 0 auto;
-  margin-top: 100px;
   .file-upload-wrapper {
+    margin-top: 50px;
     display: flex;
-    justify-content: space-between;
-    width: 50%;
+    min-width: 150px;
+    margin-bottom: 35px;
+    justify-content: center;
     position: relative;
     flex-direction: row;
-    margin-bottom: 30px; 
+    display: flex;
     .file-upload {
-      width: 80px;
+      width: 35px;
       overflow: hidden;
       .file-input {
         position: absolute;
         opacity: 0;
+        overflow: hidden;
         z-index: 1;
+        width: 35px;
+        height: 30px;
       }
       .add-file-btn {
         position: absolute;
         z-index: 0;
         pointer-events: none;
+        outline: none;
+        border: none;
+        font-weight: bolder;
+        background: #485761;
+        border-radius: 25%;
+        font-size: 25px;
+        width: 30px;
+        height: 30px;
+        color: $fontColor;
+      }
+    }
+    .file-upload:hover {
+      .add-file-btn {
+        background:rgba(63, 81, 181, 1);
       }
     }
   }
@@ -37,16 +58,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column-reverse;
     width: 100%;
     max-width: 800px;
     min-width: 300px;
     margin: 0 auto;
-    .preview-text {
-      color: #999;
-      font-size: 20px;
-      font-weight: bold;
+    .change-avatar-btn {
+      width: 40%;
+      height: 30px;
+      outline: none;
+      background: rgba(27, 162, 97, 1);
+      border: none;
+      border-radius: 3px;
+      margin-left: 5px;
+      font-family: "Work Sans";
+      font-size: 18px;
+      color: $fontColor;
+    }
+    .change-avatar-btn:hover {
+      opacity: .9;
     }
   }
+  .preview-text {
+    color: #999;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Work Sans";
+  }
+
   .cropper-crop-box, .cropper-view-box {
     border-radius: 50%;
   }
@@ -79,4 +118,3 @@
     min-height: 100%;
   }
 }
-

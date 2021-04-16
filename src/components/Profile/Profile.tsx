@@ -4,6 +4,7 @@ import { useState } from 'react';
 import '@firebase/storage';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import 'ionicons-npm/css/ionicons.css';
 
 type Props = {
   user: any,
@@ -17,7 +18,7 @@ const Profile = ({setUser}: Props) => {
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);
   const [cropper, setCropper] = useState<any>();
-  
+
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
 
@@ -58,25 +59,27 @@ const Profile = ({setUser}: Props) => {
       <div className="file-upload-wrapper">
         <div className="file-upload">
           <input className="file-input" type="file" onChange={onFileUpload}/>
-          <button className="add-file-btn">Add File</button>
+          <button className="add-file-btn"><i className="ion-android-add"></i></button>
         </div>
-        <button className="change-avatar-btn" onClick={getCropData} disabled={!userImg}>Change Avatar</button>
       </div>
       {previewError && <span className="preview-error">Format of this file is not supported</span>}
-      <div className="preview-container">
+      <div>
         {imagePreview 
           ? (
-            <Cropper
-              aspectRatio={1}
-              src={imagePreview.toString()}
-              viewMode={3}
-              background={true}
-              autoCropArea={0.3}
-              center={false}
-              responsive={true}
-              restore={true}
-              onInitialized={(cropper) => {setCropper(cropper);}}
-            />
+            <div className="preview-container"> 
+            <button className="change-avatar-btn" onClick={getCropData} disabled={!userImg}>Change Avatar</button>
+              <Cropper
+                aspectRatio={1}
+                src={imagePreview.toString()}
+                viewMode={3}
+                background={true}
+                autoCropArea={0.3}
+                center={false}
+                responsive={true}
+                restore={true}
+                onInitialized={(cropper) => {setCropper(cropper);}}
+              />
+            </div>
         ) : (<span className="preview-text">Upload The Image</span>)
         }
       </div>
