@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/NewYorkTimes/static/css/main.847723c6.chunk.css",
-    "main.js": "/NewYorkTimes/static/js/main.3b9c56a8.chunk.js",
-    "main.js.map": "/NewYorkTimes/static/js/main.3b9c56a8.chunk.js.map",
+    "main.css": "/NewYorkTimes/static/css/main.76c057a2.chunk.css",
+    "main.js": "/NewYorkTimes/static/js/main.63decbdc.chunk.js",
+    "main.js.map": "/NewYorkTimes/static/js/main.63decbdc.chunk.js.map",
     "runtime-main.js": "/NewYorkTimes/static/js/runtime-main.cdad5f93.js",
     "runtime-main.js.map": "/NewYorkTimes/static/js/runtime-main.cdad5f93.js.map",
     "static/css/2.fe2a3aa7.chunk.css": "/NewYorkTimes/static/css/2.fe2a3aa7.chunk.css",
-    "static/js/2.b21c2b35.chunk.js": "/NewYorkTimes/static/js/2.b21c2b35.chunk.js",
-    "static/js/2.b21c2b35.chunk.js.map": "/NewYorkTimes/static/js/2.b21c2b35.chunk.js.map",
+    "static/js/2.fd0b244c.chunk.js": "/NewYorkTimes/static/js/2.fd0b244c.chunk.js",
+    "static/js/2.fd0b244c.chunk.js.map": "/NewYorkTimes/static/js/2.fd0b244c.chunk.js.map",
     "index.html": "/NewYorkTimes/index.html",
     "static/css/2.fe2a3aa7.chunk.css.map": "/NewYorkTimes/static/css/2.fe2a3aa7.chunk.css.map",
-    "static/css/main.847723c6.chunk.css.map": "/NewYorkTimes/static/css/main.847723c6.chunk.css.map",
-    "static/js/2.b21c2b35.chunk.js.LICENSE.txt": "/NewYorkTimes/static/js/2.b21c2b35.chunk.js.LICENSE.txt"
+    "static/css/main.76c057a2.chunk.css.map": "/NewYorkTimes/static/css/main.76c057a2.chunk.css.map",
+    "static/js/2.fd0b244c.chunk.js.LICENSE.txt": "/NewYorkTimes/static/js/2.fd0b244c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cdad5f93.js",
     "static/css/2.fe2a3aa7.chunk.css",
-    "static/js/2.b21c2b35.chunk.js",
-    "static/css/main.847723c6.chunk.css",
-    "static/js/main.3b9c56a8.chunk.js"
+    "static/js/2.fd0b244c.chunk.js",
+    "static/css/main.76c057a2.chunk.css",
+    "static/js/main.63decbdc.chunk.js"
   ]
 }
