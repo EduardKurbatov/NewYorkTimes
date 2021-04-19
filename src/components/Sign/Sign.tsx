@@ -114,30 +114,34 @@ const Sign = () => {
     <div className="login">
       <div className="loginContainer">
         <h1 className="heading">{accountWasCreated ? 'Sign Up' : 'Sign In'}</h1>
-        <label>User Email</label>
-        <input
-          type="text"
-          placeholder="Enter the email"
-          required
-          value={email?.value}
-          onChange={e => setEmail({...email, value: e.target.value})}
-          onFocus={() => {setEmail({...email, displayError: false})}}
-        />
-        {email.displayError && <p className="err-msg">{email.errorMessage}</p>}
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Enter the password"
-          required
-          value={password?.value}
-          onChange={e => setPassword({...password, value: e.target.value})}
-          onFocus={() => {setPassword({...password, displayError: false})}}
-        />
-        {password.displayError && <p className="err-msg">{password.errorMessage}</p>}
+        <div className="data-input-container">
+          <label>User Email</label>
+          <input className="data-input"
+            type="text"
+            placeholder="Enter the email"
+            required
+            value={email?.value}
+            onChange={e => setEmail({...email, value: e.target.value})}
+            onFocus={() => {setEmail({...email, displayError: false})}}
+          />
+          {email.displayError && <p className="err-msg">{email.errorMessage}</p>}
+        </div>
+        <div className="data-input-container">
+          <label>Password</label>
+          <input className="data-input"
+            type="password"
+            placeholder="Enter the password"
+            required
+            value={password?.value}
+            onChange={e => setPassword({...password, value: e.target.value})}
+            onFocus={() => {setPassword({...password, displayError: false})}}
+          />
+          {password.displayError && <p className="err-msg">{password.errorMessage}</p>}
+        </div>
         {accountWasCreated && (
-        <>
+        <div className="data-input-container">
           <label>Confirm The Password</label>
-          <input
+          <input className="data-input"
             type="password"
             placeholder="Confirm the password"
             required
@@ -146,16 +150,18 @@ const Sign = () => {
             onFocus={() => {setConfirmedPassword({...confirmedPassword, displayError: false})}}
           />
           {confirmedPassword.displayError && <p className="err-msg">{confirmedPassword.errorMessage}</p>}
-        </>
+        </div>
         )}
         <div className="btn-container">
           <button className="sign-btn" onClick={accountWasCreated ? handleSignUp : handleSignIn}>
-            Sign {accountWasCreated ? 'Up' : 'In'}
+            Submit
           </button>
-          <p>
-            {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
-            <span onClick={toggleBetweenAuthForms}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
-          </p>
+          <div>
+            <span className="line">-----</span>
+            <span className="or">or</span>
+            <span className="line">-----</span>
+          </div>
+            <button className="change-sign-btn" onClick={toggleBetweenAuthForms}>Sign {accountWasCreated ? 'In' : 'Up'}</button>
         </div>
         {errorMessages && 
           <ErrorModal

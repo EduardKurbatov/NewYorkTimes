@@ -1,27 +1,79 @@
-$label-font-color: #106bda;
+$label-font-color: #6a6ff5;
 
 .login {
-  max-width: 250px;
+  max-width: 230px;
   padding-top: 50px;
   margin: 0 auto;
+  font-family: "Work Sans";
   .loginContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
-    outline: 1px solid black;
     .heading {
       text-align: center;
     }
-    label {
-      color: $label-font-color;
+    .data-input-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      .data-input {
+        outline: none;
+        opacity: .7;
+        border: none;
+        border-bottom: 1px solid rgba(219, 218, 218, .7);
+      }
+      .data-input::placeholder {
+        opacity: 0.7;
+      }
+      label {
+        color: $label-font-color;
+        margin-bottom: 3px;
+        font-family: "Work Sans";
+      }
+      .err-msg {
+        color: rgba(255, 0, 0, .8);
+        font-family: "Work Sans";
+      }
     }
     .btn-container {
+      padding-top: 50px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      .or {
+        margin: 0px 5px 0 5px;
+        opacity: .7;
+        color: #999;
+      }
+      .line {
+        opacity: .7;
+        color: #999;
+        letter-spacing: -2px;
+      }
       .sign-btn {
+        border: none;
+        outline: none;
         width: 60%;
+        height: 30px;
+        border-radius: 30px;
+        background: #6a6ff5;
+        box-shadow: 0px 5px 10px -1px #777;
+        color: #fff;
+        font-family: "Work Sans";
+        margin-bottom: 15px;
+      }
+      .change-sign-btn {
+        border: none;
+        outline: none;
+        width: 60%;
+        height: 30px;
+        border-radius: 30px;
+        background: #fff;
+        box-shadow: 0px 5px 10px -1px #6a6ff5;
+        color: #6a6ff5;
+        font-family: "Work Sans";
+        margin-top: 15px;
       }
     }
   }
