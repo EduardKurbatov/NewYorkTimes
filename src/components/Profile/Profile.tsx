@@ -13,26 +13,25 @@ type Props = {
 const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
 
 const Profile = ({setUser}: Props) => {
-  const [userImg, setUserImg] = useState<File | null>(null);
+  const [userImg, setUserImg] = useState<File | undefined>(undefined);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const [previewError, setPreviewError] = useState<boolean>(false);
   const [cropper, setCropper] = useState<any>();
   
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
+    const isFileValid = file && ALLOWED_TYPES.includes(file.type);
 
-    if (file && ALLOWED_TYPES.includes(file.type)) {
+    if (isFileValid) {
       const reader = new FileReader();
       reader.onloadend = (() => {
         setImagePreview(reader.result);
       });
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file as Blob);
       setUserImg(file);
-      setPreviewError(false);
-    } else {
-      setPreviewError(true);
     }
 
+    setPreviewError(!isFileValid);
 
     e.target.value = '';
   };
@@ -51,7 +50,7 @@ const Profile = ({setUser}: Props) => {
     await currentUser?.updateProfile({photoURL});
     setUser(currentUser);
     setImagePreview(null);
-    setUserImg(null);
+    setUserImg(undefined);
   };
 
   return (
