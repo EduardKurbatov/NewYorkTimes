@@ -62,6 +62,7 @@ $label-font-color: #6a6ff5;
         color: #fff;
         font-family: "Work Sans";
         margin-bottom: 15px;
+        cursor: pointer;
       }
       .change-sign-btn {
         border: none;
@@ -74,6 +75,10 @@ $label-font-color: #6a6ff5;
         color: #6a6ff5;
         font-family: "Work Sans";
         margin-top: 15px;
+        cursor: pointer;
+      }
+      .sign-btn:hover, .change-sign-btn:hover {
+        opacity: .9;
       }
     }
   }
