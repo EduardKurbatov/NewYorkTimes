@@ -5,12 +5,9 @@ import fire from '../../fire';
 
 type Props = {
   user: any,
-  setUser: (value: React.SetStateAction<any>) => void,
-  hasAccount: boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void,
 };
 
-const Header = ({setUser, user, hasAccount}: Props) => {
+const Header = ({user}: Props) => {
   const history = useHistory();
 
   const handleLogOut = (): void => {

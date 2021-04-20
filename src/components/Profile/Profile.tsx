@@ -33,6 +33,7 @@ const Profile = ({setUser}: Props) => {
       setPreviewError(true);
     }
 
+
     e.target.value = '';
   };
 

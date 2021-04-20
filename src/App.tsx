@@ -9,7 +9,6 @@ import fire from './fire';
 
 const App: FC = () => {
   const [user, setUser] = useState<any>(null);
-  const [hasAccount, setHasAccount] = useState<boolean>(false);
 
   const authListener = () => {
     fire.auth().onAuthStateChanged(setUser);
@@ -24,9 +23,6 @@ const App: FC = () => {
       <div className="app">
         <Header 
           user={user}
-          setUser={setUser}
-          hasAccount={hasAccount}
-          setHasAccount={setHasAccount}
         />
         <Route exact path="/">
           <Main />

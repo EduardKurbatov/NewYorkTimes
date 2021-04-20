@@ -65,10 +65,6 @@ const Sign = () => {
     return confirmedPassword.value === password.value;
   };
 
-  const clearErrors = (): void => {
-    setErrorMessages(null);
-  };
-
   const clearInputsAndValidationErrors = (): void => {
     setPassword({...password, value: '', displayError: false});
     setEmail({...email, value: '', displayError: false});
@@ -95,7 +91,7 @@ const Sign = () => {
     setConfirmedPassword({...confirmedPassword, displayError: !arePasswordsEqual()});
 
     if (isSignUpFormValid()) {
-      clearErrors();
+      setErrorMessages(null);
       runUserAuth({email: email.value, password: password.value, authFunc: createUser});
     };
   };
@@ -105,7 +101,7 @@ const Sign = () => {
     setPassword({...password, displayError: !password.isValid()});
 
     if (areEmailPasswordValid()) {
-      clearErrors();
+      setErrorMessages(null);
       runUserAuth({email: email.value, password: password.value, authFunc: initLogin});
     };
   };
