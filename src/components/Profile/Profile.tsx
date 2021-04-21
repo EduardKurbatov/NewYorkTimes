@@ -6,6 +6,7 @@ import Cropper from 'react-cropper';
 import firebase from 'firebase';
 import 'cropperjs/dist/cropper.css';
 import { Redirect } from 'react-router';
+import { Routes } from '../../App';
 
 type Props = {
   user: firebase.User | null, 
@@ -86,7 +87,7 @@ const Profile = ({user, setUser, setUserAvatar}: Props) => {
           }
         </div>
       </div>)
-    : <Redirect to="/sign" />
+    : <Redirect to={Routes.SIGN} />
 };
 
 export default Profile;
