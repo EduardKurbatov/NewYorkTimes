@@ -25,7 +25,7 @@ $font-color: #fff;
   .header:hover {
     opacity: .7;
   }
-  .exist-user {
+  .user-controls-container {
     position: relative;
     display: flex;
     justify-content: center;
@@ -34,6 +34,15 @@ $font-color: #fff;
     min-width: 100px;
     height: 100%;
     border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      .drop-down-items {
+        display: block;
+      }
+      .avatar-wrapper .ion-chevron-down {
+        font-size: 13px;
+      }
+    }
     .avatar-wrapper {
       display: flex;
       justify-content: space-between;
@@ -54,16 +63,15 @@ $font-color: #fff;
       }
     }
     .drop-down-items {
+      display: none;
       position: absolute;
       top: 100%;
       width: 100%;
-      display: flex;
       flex-direction: column;
       list-style: none;
       margin: 0 auto;
-      display:none;
-      padding-left: 10px;
       .drop-down-item {
+        cursor: pointer;
         float: right;
         min-width: 130px;
         min-height: 40px;
@@ -99,16 +107,5 @@ $font-color: #fff;
   }
   .login-btn:hover {
     opacity: .7;
-  }
-}
-
-.exist-user:hover {
-  .drop-down-items {
-    display: block;
-  }
-  .avatar-wrapper {
-    .ion-chevron-down {
-      font-size: 13px;
-    }
   }
 }

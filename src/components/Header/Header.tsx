@@ -6,12 +6,9 @@ import 'ionicons-npm//css/ionicons.css';
 
 type Props = {
   user: any,
-  setUser: (value: React.SetStateAction<any>) => void,
-  hasAccount: boolean,
-  setHasAccount: (value: React.SetStateAction<boolean>) => void,
 };
 
-const Header = ({setUser, user, hasAccount}: Props) => {
+const Header = ({user}: Props) => {
   const history = useHistory();
 
   const handleLogOut = (): void => {
@@ -23,7 +20,7 @@ const Header = ({setUser, user, hasAccount}: Props) => {
     <div className="header-container">
       <h1 className="header" onClick={() => {history.push('/')}}>NY Times</h1>
       {user ? (
-        <div className="exist-user">
+        <div className="user-controls-container">
           <div className="avatar-wrapper">
             <img className="user-avatar" src={user.photoURL || defaultPhoto} alt="User avatar" />
             <i className="ion-chevron-down"></i>
