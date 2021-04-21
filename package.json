@@ -4,17 +4,25 @@
   "homepage": "http://EduardKurbatov.github.io/NewYorkTimes",
   "private": true,
   "dependencies": {
+    "@google-cloud/storage": "^5.8.1",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "cropperjs": "^1.5.11",
     "d": "^1.0.1",
-    "firebase": "^8.2.6",
+    "firebase": "^8.2.10",
     "firebase-tools": "^9.1.2",
-    "node-sass": "^4.0.0",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-image-crop": "^8.6.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "typescript": "^4.2.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -44,6 +52,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "@rescripts/cli": "0.0.16",
+    "@types/react-image-crop": "^8.1.2",
+    "@types/react-router-dom": "^5.1.7",
+    "gh-pages": "^3.1.0",
+    "react-cropper": "^2.1.7"
   }
 }
