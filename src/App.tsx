@@ -21,9 +21,7 @@ const App: FC = () => {
   return (
     <BrowserRouter>
       <div className="app">
-        <Header 
-          user={user}
-        />
+        <Header user={user} />
         <Route exact path="/">
           <Main />
         </Route>
