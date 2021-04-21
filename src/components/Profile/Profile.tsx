@@ -84,7 +84,7 @@ const Profile = ({setUser, user}: Props) => {
           }
         </div>
       </div>)
-    : <Redirect to='/sign' />
+    : <Redirect to="/sign" />
 };
 
 export default Profile;
