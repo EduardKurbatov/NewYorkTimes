@@ -41,11 +41,10 @@ const Profile = ({setUser}: Props) => {
       setLoadingStatus(true);
 
       if (blob) {
-        const storageRef = fire.storage().ref();
-        const fileRef = storageRef.child(`images/${uploadedImageName}>`);
+        const fileRef = fire.storage().ref().child(`images/${uploadedImageName}>`);
 
-        setFileValidationStatus(true);
         await fileRef.put(blob);
+        setFileValidationStatus(true);
 
         const photoURL: string = await fileRef.getDownloadURL();
         /* we need to fetch user from firebase here, because after first image upload
@@ -96,7 +95,7 @@ const Profile = ({setUser}: Props) => {
             }
           </>
           // TODO: add loader component here
-        : <h2>Loading image...</h2>
+        : <h2>Uploading image...</h2>
       }
     </div>
   );
