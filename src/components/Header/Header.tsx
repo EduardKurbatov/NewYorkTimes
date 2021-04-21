@@ -7,7 +7,6 @@ import { Routes } from '../../App';
 
 type Props = {
   user: firebase.User | null,
-  setUser: (value: React.SetStateAction<firebase.User | null>) => void,
   userAvatar: string | null | undefined,
 };
 
@@ -33,7 +32,7 @@ const Header = ({user, userAvatar}: Props) => {
           </div>  
         </div>
       ) : (
-          <button className="login-btn" onClick={() => {history.push(Routes.SIGN)}}>Login</button>
+        <button className="login-btn" onClick={() => {history.push(Routes.SIGN)}}>Login</button>
       )}
     </div>
   );

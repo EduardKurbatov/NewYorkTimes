@@ -1,14 +1,14 @@
 import './App.scss';
 import { useEffect, useState, FC } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import fire from './fire';
 import firebase from 'firebase';
 import Sign from './components/Sign/Sign';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Profile from './components/Profile/Profile';
+import fire from './fire';
 
-export const enum Routes {
+export enum Routes {
   MAIN = '/',
   PROFILE = '/profile',
   SIGN = '/sign',
@@ -38,7 +38,6 @@ const App: FC = () => {
       <div className="app">
         <Header 
           user={user}
-          setUser={setUser}
           userAvatar={userAvatar}
         />
         <Route exact path={Routes.MAIN}>
@@ -48,7 +47,11 @@ const App: FC = () => {
           <Sign />
         </Route>
         <Route path={Routes.PROFILE}>
-          <Profile setUser={setUser} setUserAvatar={setUserAvatar} />
+          <Profile 
+            user={user}
+            setUser={setUser}
+            setUserAvatar={setUserAvatar}
+          />
         </Route>
       </div>
     </BrowserRouter>
