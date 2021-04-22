@@ -30,7 +30,7 @@ const App = () => {
   }, []);
 
   return loading
-    ? <h2>Loading...</h2> // TODO: add loader component here
+    ? <h2>Loading...</h2>
     : <div className="app">
         <BrowserRouter>
           <Header user={user} />
