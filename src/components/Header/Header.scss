@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 $font-color: #fff;
 
 .header-container {
@@ -14,7 +15,7 @@ $font-color: #fff;
   background: rgba(63, 81, 181, 1);
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.84);
   .header {
-    font-family: 'Work Sans';
+    font-family: 'Roboto';
     letter-spacing: 1px;
     font-size: 20px;
     font-weight: 200;
@@ -76,9 +77,10 @@ $font-color: #fff;
         font-size: 13px;
         outline: none;
         border: none;
-        font-family: 'Work Sans';
+        font-family: 'Roboto';
+        font-weight: 400;
         i {
-        font-size: 13px;
+        font-size: 15px;
         margin-left: 5px;
         }
       }
