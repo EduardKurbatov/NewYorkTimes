@@ -7,33 +7,31 @@ import { Routes } from '../../App';
 
 type Props = {
   user: firebase.User | null,
-  userAvatar: string | null | undefined,
 };
 
-const Header = ({user, userAvatar}: Props) => {
+const Header = ({user}: Props) => {
   const history = useHistory();
 
-  const handleLogOut = (): void => {
-    fire.auth().signOut();
+  const handleLogOut = async (): Promise<void> => {
+    await fire.auth().signOut();
     history.push(Routes.SIGN);
   };
 
   return (
     <div className="header-container">
       <h1 className="header" onClick={() => {history.push(Routes.MAIN)}}>NY Times</h1>
-      {user ? (
-        <div className="exist-user">
-          <img className="user-avatar" src={userAvatar || defaultPhoto} alt="User avatar" />
-          <div className="drop-down">
-            <div className="drop-down-item">
-              <button className="drop-down-btn" onClick={() => {history.push(Routes.PROFILE)}}>Profile</button>
-              <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
+      {user
+        ? <div className="exist-user">
+            <img className="user-avatar" src={user.photoURL || defaultPhoto} alt="User avatar" />
+            <div className="drop-down">
+              <div className="drop-down-item">
+                <button className="drop-down-btn" onClick={() => {history.push(Routes.PROFILE)}}>Profile</button>
+                <button className="drop-down-btn" onClick={handleLogOut}>LogOut</button>
+              </div>
             </div>
-          </div>  
-        </div>
-      ) : (
-        <button className="login-btn" onClick={() => {history.push(Routes.SIGN)}}>Login</button>
-      )}
+          </div>
+        : <button className="login-btn" onClick={() => {history.push(Routes.SIGN)}}>Login</button>
+      }
     </div>
   );
 };

@@ -150,7 +150,7 @@ const Sign = () => {
             Sign {accountWasCreated ? 'Up' : 'In'}
           </button>
           <p>
-            {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
+            {accountWasCreated ? 'Allready have an account?' : 'Don`t have an account?'}
             <span onClick={toggleBetweenAuthForms}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
         </div>
