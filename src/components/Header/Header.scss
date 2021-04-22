@@ -36,11 +36,8 @@ $font-color: #fff;
     border-radius: 50%;
     cursor: pointer;
     &:hover {
-      .drop-down-items {
-        display: block;
-      }
-      .avatar-wrapper .ion-chevron-down {
-        font-size: 13px;
+      .avatar-wrapper > i{
+        font-size: 14px;
       }
     }
     .avatar-wrapper {
@@ -49,7 +46,7 @@ $font-color: #fff;
       align-items: center;
       width: 100%;
       height: 100%;
-      .ion-chevron-down {
+      .ion-chevron-down, .ion-chevron-up {
         color: $font-color;
         margin-top: 10px;
         padding-right: 25px;
@@ -63,7 +60,6 @@ $font-color: #fff;
       }
     }
     .drop-down-items {
-      display: none;
       position: absolute;
       top: 100%;
       width: 100%;
