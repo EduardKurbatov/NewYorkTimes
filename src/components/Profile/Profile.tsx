@@ -1,6 +1,6 @@
 import './Profile.scss';
 import fire from '../../fire';
-import { useState} from 'react';
+import { useState } from 'react';
 import '@firebase/storage';
 import Cropper from 'react-cropper';
 import firebase from 'firebase';
