@@ -3,86 +3,99 @@ import fire from '../../fire';
 import { useState } from 'react';
 import '@firebase/storage';
 import Cropper from 'react-cropper';
+import firebase from 'firebase';
 import 'cropperjs/dist/cropper.css';
 import 'ionicons-npm/css/ionicons.css';
 
 type Props = {
-  user: any,
-  setUser: (value: React.SetStateAction<any>) => void
+  setUser: (value: React.SetStateAction<firebase.User | null>) => void,
 };
 
-const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg'];
+const ALLOWED_TYPES = ['image/png' ,'image/jpg' ,'image/jpeg', 'image/svg+xml'];
 
 const Profile = ({setUser}: Props) => {
-  const [userImg, setUserImg] = useState<File | null>(null);
+  const [uploadedImageName, setUploadedImageName] = useState<string | undefined>(undefined);
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
-  const [previewError, setPreviewError] = useState<boolean>(false);
-  const [cropper, setCropper] = useState<any>();
+  const [isUploadedFileValid, setFileValidationStatus] = useState<boolean>(true);
+  const [cropper, setCropper] = useState<Cropper>();
+  const [loading, setLoadingStatus] = useState<boolean>(false);
 
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
 
-    if (file && ALLOWED_TYPES.includes(file.type)) {
+    setFileValidationStatus(Boolean(file && ALLOWED_TYPES.includes(file.type)));
+
+    if (isUploadedFileValid) {
       const reader = new FileReader();
       reader.onloadend = (() => {
         setImagePreview(reader.result);
       });
-      reader.readAsDataURL(file);
-      setUserImg(file);
-      setPreviewError(false);
-    } else {
-      setPreviewError(true);
+      reader.readAsDataURL(file as Blob);
+      setUploadedImageName(file?.name); // checking if file is defined, because eslint wants it to be so
     }
 
     e.target.value = '';
   };
 
-  const getCropData = () => {
-    cropper.getCroppedCanvas().toBlob(uploadAvatar);
-  };
+  const croppAndUploadImage = (): void => {
+    cropper?.getCroppedCanvas().toBlob(async (blob: Blob | null) => {
+      setLoadingStatus(true);
 
-  const uploadAvatar = async (blob: Blob): Promise<void> => {
-    const storageRef = fire.storage().ref();
-    const fileRef = storageRef.child(`images/${userImg?.name}>`);
-    await fileRef.put(blob);
-    const photoURL: string = await fileRef.getDownloadURL();
-    setUser({photoURL});
-    const currentUser = fire.auth().currentUser;
-    await currentUser?.updateProfile({photoURL});
-    setUser(currentUser);
-    setImagePreview(null);
-    setUserImg(null);
+      if (blob) {
+        const fileRef = fire.storage().ref().child(`images/${uploadedImageName}>`);
+
+        await fileRef.put(blob);
+        setFileValidationStatus(true);
+
+        const photoURL: string = await fileRef.getDownloadURL();
+
+        const user: firebase.User | null = firebase.auth().currentUser;
+
+        await user?.updateProfile({photoURL});
+        user && setUser({...user, photoURL: user.photoURL});
+        setImagePreview(null);
+        setUploadedImageName(undefined);
+      }
+
+      setLoadingStatus(false);
+    });
   };
 
   return (
     <div className="profile-page">
-      <div className="file-upload-wrapper">
-        <div className="file-upload">
-          <input className="file-input" type="file" onChange={onFileUpload}/>
-          <button className="add-file-btn"><i className="ion-android-add"></i></button>
-        </div>
-      </div>
-      {previewError && <span className="preview-error">Format of this file is not supported</span>}
-      <div>
-        {imagePreview 
-          ? (
-            <div className="preview-container"> 
-            <button className="change-avatar-btn" onClick={getCropData} disabled={!userImg}>Change Avatar</button>
-              <Cropper
-                aspectRatio={1}
-                src={imagePreview.toString()}
-                viewMode={3}
-                background={true}
-                autoCropArea={0.3}
-                center={false}
-                responsive={true}
-                restore={true}
-                onInitialized={(cropper) => {setCropper(cropper);}}
-              />
+      {!loading
+        ? <>
+            <div className="file-upload-wrapper">
+              <div className="file-upload">
+                <input className="file-input" type="file" onChange={onFileUpload}/>
+                <button className="add-file-btn">Choose an image</button>
+              </div>
+              {imagePreview && <button
+                  className="change-avatar-btn" 
+                  onClick={croppAndUploadImage}
+                >Accept and upload</button>
+              }
             </div>
-        ) : (<span className="preview-text">Upload The Image</span>)
-        }
-      </div>
+            {!isUploadedFileValid && <span className="preview-error">Format of this file is not supported</span>}
+            {imagePreview
+              ? <Cropper
+                  className="preview-container"
+                  aspectRatio={1}
+                  src={imagePreview.toString()}
+                  viewMode={3}
+                  background={true}
+                  autoCropArea={0.3}
+                  center={false}
+                  responsive={true}
+                  restore={true}
+                  onInitialized={setCropper}
+                />
+              : <span className="preview-text">Upload The Image</span>
+            }
+          </>
+          // TODO: add loader component here
+        : <h2>Uploading image...</h2>
+      }
     </div>
   );
 };

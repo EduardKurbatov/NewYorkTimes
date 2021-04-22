@@ -4,6 +4,7 @@ import './Signup.scss';
 import { createUser, initLogin} from '../utils';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import firebase from 'firebase';
+import { Routes } from '../../App';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{6,}$/;
@@ -65,10 +66,6 @@ const Sign = () => {
     return confirmedPassword.value === password.value;
   };
 
-  const clearErrors = (): void => {
-    setErrorMessages(null);
-  };
-
   const clearInputsAndValidationErrors = (): void => {
     setPassword({...password, value: '', displayError: false});
     setEmail({...email, value: '', displayError: false});
@@ -83,7 +80,7 @@ const Sign = () => {
   const runUserAuth = async ({email, password, authFunc}: userAuthParams): Promise<void> => {
     try {
       await authFunc(email, password);
-      history.push('/');
+      history.push(Routes.MAIN);
     } catch (err) {
       setErrorMessages(err?.message);
     }
@@ -95,7 +92,7 @@ const Sign = () => {
     setConfirmedPassword({...confirmedPassword, displayError: !arePasswordsEqual()});
 
     if (isSignUpFormValid()) {
-      clearErrors();
+      setErrorMessages(null);
       runUserAuth({email: email.value, password: password.value, authFunc: createUser});
     };
   };
@@ -105,7 +102,7 @@ const Sign = () => {
     setPassword({...password, displayError: !password.isValid()});
 
     if (areEmailPasswordValid()) {
-      clearErrors();
+      setErrorMessages(null);
       runUserAuth({email: email.value, password: password.value, authFunc: initLogin});
     };
   };
@@ -153,7 +150,7 @@ const Sign = () => {
             Sign {accountWasCreated ? 'Up' : 'In'}
           </button>
           <p>
-            {accountWasCreated ? 'Allready have an account ?' : 'Don`t have an account ?'}
+            {accountWasCreated ? 'Allready have an account?' : 'Don`t have an account?'}
             <span onClick={toggleBetweenAuthForms}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
         </div>
