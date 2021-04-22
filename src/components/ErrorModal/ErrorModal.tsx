@@ -1,27 +1,21 @@
 import './ErrorModal.scss'
 
-interface Props {
-    signInError: string ,
-    signUpError: string ,
-    setSignInError: (value: React.SetStateAction<string>) => void,
-    setSignUpError: (value: React.SetStateAction<string>) => void
-}
+type Props = {
+  errorMessages: string[],
+  setErrorMessages: (value: React.SetStateAction<string[] | null>) => void
+};
 
-function ErrorModal(props: Props) {
-
-const {signUpError, signInError, setSignInError, setSignUpError} = props
-
-const closeModal = () => {
-  setSignInError("");
-  setSignUpError("");
-}
+function ErrorModal({errorMessages, setErrorMessages}: Props) {
+  const closeModal = () => {
+    setErrorMessages(null);
+  };
 
   return (
     <div className="error-whindow">
-      <p>{signUpError || signInError}</p>
+      <p>{errorMessages}</p>
       <button onClick={closeModal}>OK</button>
     </div>
-  )
-}
+  );
+};
 
-export default ErrorModal
+export default ErrorModal;
