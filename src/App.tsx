@@ -1,39 +1,59 @@
 import './App.scss';
-import { useEffect, useState, FC } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import firebase from 'firebase';
+import Sign from './components/Sign/Sign';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Profile from './components/Profile/Profile';
-import Sign from './components/Sign/Sign';
 import fire from './fire';
 
-const App: FC = () => {
-  const [user, setUser] = useState<any>(null);
+export enum Routes {
+  MAIN = '/',
+  PROFILE = '/profile',
+  SIGN = '/sign',
+};
+
+const App = () => {
+  const [loading, setLoadingStatus] = useState<boolean>(true);
+  const [user, setUser] = useState<firebase.User | null>(null);
 
   const authListener = () => {
-    fire.auth().onAuthStateChanged(setUser);
+    fire.auth().onAuthStateChanged((user: firebase.User | null) => {
+      setUser(user);
+      setLoadingStatus(false);
+    });
   };
 
   useEffect(() => {
     authListener();
   }, []);
 
-  return (
-    <BrowserRouter>
-      <div className="app">
-        <Header user={user} />
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route path="/sign">
-          <Sign />
-        </Route>
-        <Route path="/profile">
-          <Profile user={user} setUser={setUser} />
-        </Route>
+  return loading
+    ? <h2>Loading...</h2> // TODO: add loader component here
+    : <div className="app">
+        <BrowserRouter>
+          <Header user={user} />
+          <Switch>
+            <Route exact path={Routes.MAIN}>
+              <Main />
+            </Route>
+            <Route path={Routes.SIGN}>
+              <Sign />
+            </Route>
+            <Route path={Routes.PROFILE}>
+              {user
+                ? <Profile setUser={setUser} />
+                : <Redirect to={Routes.SIGN} />
+              }
+            </Route>
+            {/* If page is not found - redirect to Routes.MAIN */}
+            <Route>
+              <Redirect to={Routes.MAIN}/>
+            </Route>
+          </Switch>
+        </BrowserRouter>
       </div>
-    </BrowserRouter>
-  );
 };
 
 export default App;
