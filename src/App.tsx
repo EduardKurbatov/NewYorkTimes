@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Profile from './components/Profile/Profile';
 import fire from './fire';
+import loadingImg from './assets/loading.gif';
 
 export enum Routes {
   MAIN = '/',
@@ -30,7 +31,10 @@ const App = () => {
   }, []);
 
   return loading
-    ? <h2>Loading...</h2> // TODO: add loader component here
+    ?
+      <div className="loader-container">
+        <img src={loadingImg} />
+      </div>
     : <div className="app">
         <BrowserRouter>
           <Header user={user} />
@@ -47,7 +51,6 @@ const App = () => {
                 : <Redirect to={Routes.SIGN} />
               }
             </Route>
-            {/* If page is not found - redirect to Routes.MAIN */}
             <Route>
               <Redirect to={Routes.MAIN}/>
             </Route>

@@ -5,6 +5,8 @@ import '@firebase/storage';
 import Cropper from 'react-cropper';
 import firebase from 'firebase';
 import 'cropperjs/dist/cropper.css';
+import loadingImg from '../../assets/loading.gif';
+
 
 type Props = {
   setUser: (value: React.SetStateAction<firebase.User | null>) => void,
@@ -47,9 +49,7 @@ const Profile = ({setUser}: Props) => {
         setFileValidationStatus(true);
 
         const photoURL: string = await fileRef.getDownloadURL();
-        /* we need to fetch user from firebase here, because after first image upload
-         * updateProfile method gets removed from the User object for some reason
-        */
+
         const user: firebase.User | null = firebase.auth().currentUser;
 
         await user?.updateProfile({photoURL});
@@ -94,8 +94,10 @@ const Profile = ({setUser}: Props) => {
               : <span className="preview-text">Upload The Image</span>
             }
           </>
-          // TODO: add loader component here
-        : <h2>Uploading image...</h2>
+        : 
+          <div className="loader-container">
+            <img src={loadingImg} />
+          </div>
       }
     </div>
   );
