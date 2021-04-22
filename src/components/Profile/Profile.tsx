@@ -95,7 +95,7 @@ const Profile = ({setUser}: Props) => {
             }
           </>
         : 
-          <div className="loader-container">
+          <div>
             <img src={loadingImg} />
           </div>
       }

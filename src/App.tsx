@@ -33,7 +33,7 @@ const App = () => {
   return loading
     ?
       <div className="loader-container">
-        <img src={loadingImg} />
+        <img className="loader-item" src={loadingImg} />
       </div>
     : <div className="app">
         <BrowserRouter>
