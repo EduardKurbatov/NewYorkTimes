@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: 70px;
+  margin-top: 30px;
+  outline: 1px solid red;
   .articles-container{
     position: relative;
     width: 1200px;
@@ -63,6 +64,18 @@
       .article:hover {
         opacity: .95;
       }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .articles-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .article {
+      min-width: 350px;
+    }
   }
 }
 
