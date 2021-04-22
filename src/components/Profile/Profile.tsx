@@ -93,7 +93,6 @@ const Profile = ({setUser}: Props) => {
               : <span className="preview-text">Upload The Image</span>
             }
           </>
-          // TODO: add loader component here
         : <h2>Uploading image...</h2>
       }
     </div>
