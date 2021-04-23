@@ -5,7 +5,7 @@ import { Redirect, useHistory } from 'react-router';
 import firebase from 'firebase';
 import { Items } from '../types';
 import { Routes } from '../../App';
-
+import ArticlePage from '../ArticlePage/ArticlePage';
 
 const url = 'https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=oLLGAGDyC2xECFJqIDKqxlczH0fE3gGO';
 const options = {
@@ -17,14 +17,12 @@ const options = {
 
 type Props = {
   user: firebase.User | null,
-  setArticleItems: (value: React.SetStateAction<Items | undefined>) => void,
 };
 
-
-function Main({user, setArticleItems }: Props) {
+function Main({user}: Props) {
   const [articles, setArticles] = useState<Article[]>([]);
-
-  const history = useHistory();
+  const [articleItems, setArticleItems] = useState<Items | undefined>();
+  const [showArticle, setShowArticle] = useState<boolean>(false);
 
   const getArticles = async (): Promise<void> => {
     const response = await fetch(url, options);
@@ -37,14 +35,13 @@ function Main({user, setArticleItems }: Props) {
     };
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     getArticles()
   }, []);
 
-
-
   return (
     <div className="main-page">
+      {!showArticle ?
       <div className="articles-container"> 
         {articles.map((article: Article, index) => {
           return (
@@ -57,8 +54,9 @@ function Main({user, setArticleItems }: Props) {
                   tags: article.des_facet,
                   abstract: article.abstract
                 }
-                history.push(Routes.ARTICLE);
+                localStorage.setItem('article', JSON.stringify(items));
                 setArticleItems(items);
+                setShowArticle(true);
               } else {
                 <Redirect to={Routes.MAIN} />
               }
@@ -73,7 +71,8 @@ function Main({user, setArticleItems }: Props) {
               { article.media[0] && <img className="article-title-image" src={article.media[0]["media-metadata"][2].url} alt={article.title} /> }
             </div>
         )})}
-      </div>
+      </div> :
+      <ArticlePage articleItems={articleItems} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />}
     </div>
   );
 };
