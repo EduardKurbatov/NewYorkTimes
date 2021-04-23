@@ -8,44 +8,45 @@ $fontColor: #fff;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  .file-upload-wrapper {
-    margin-top: 50px;
-    display: flex;
-    margin-bottom: 35px;
-    justify-content: center;
+  .file-upload {
+    margin-top: 30px;
     position: relative;
-    flex-direction: row;
+    width: 50px;
+    height: 30px;
+    overflow: hidden;
     display: flex;
-    .file-upload {
-      width: 35px;
+    align-items: center;
+    justify-content: center;
+    .file-input {
+      position: absolute;
       overflow: hidden;
-      .file-input {
-        position: absolute;
-        opacity: 0;
-        overflow: hidden;
-        z-index: 1;
-        width: 35px;
-        height: 30px;
-      }
-      .add-file-btn {
-        position: absolute;
-        z-index: 0;
-        pointer-events: none;
-        outline: none;
-        border: none;
-        font-weight: bolder;
-        background: #485761;
-        border-radius: 25%;
-        font-size: 25px;
-        width: 30px;
-        height: 30px;
-        color: $fontColor;
+      opacity: 0;
+      z-index: 1;
+      width: 100%;
+    }
+    .add-file-btn {
+      display: grid;
+      justify-self: center;
+      align-self: center;
+      width: 100%;
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      outline: none;
+      border: none;
+      background: #485761;
+      border-radius: 15px;
+      font-size: 25px;
+      color: $fontColor;
+      .plus-icon {
+        display: grid;
+        justify-self: center;
       }
     }
-    .file-upload:hover {
-      .add-file-btn {
-        background:rgba(63, 81, 181, 1);
-      }
+  }
+  .file-upload:hover {
+    .add-file-btn {
+      background:rgba(63, 81, 181, 1);
     }
   }
   .preview-error {
@@ -62,22 +63,22 @@ $fontColor: #fff;
     max-width: 800px;
     min-width: 300px;
     margin: 0 auto;
-    .change-avatar-btn {
-      width: 40%;
-      height: 30px;
-      outline: none;
-      background: rgba(27, 162, 97, 1);
-      border: none;
-      border-radius: 3px;
-      margin-left: 5px;
-      font-family: "Work Sans";
-      font-size: 18px;
-      color: $fontColor;
-      cursor: pointer;
-    }
-    .change-avatar-btn:hover {
-      opacity: .9;
-    }
+  }
+  .change-avatar-btn {
+    width: 200px;
+    height: 30px;
+    outline: none;
+    background: rgba(27, 162, 97, 1);
+    border: none;
+    border-radius: 15px;
+    margin-left: 5px;
+    font-family: "Work Sans";
+    font-size: 18px;
+    color: $fontColor;
+    cursor: pointer;
+  }
+  .change-avatar-btn:hover {
+    opacity: .9;
   }
   .preview-text {
     color: #999;

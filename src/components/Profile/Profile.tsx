@@ -6,6 +6,7 @@ import Cropper from 'react-cropper';
 import firebase from 'firebase';
 import 'cropperjs/dist/cropper.css';
 import 'ionicons-npm/css/ionicons.css';
+import { FaPlus } from 'react-icons/fa';
 
 type Props = {
   setUser: (value: React.SetStateAction<firebase.User | null>) => void,
@@ -68,28 +69,27 @@ const Profile = ({setUser}: Props) => {
             <div className="file-upload-wrapper">
               <div className="file-upload">
                 <input className="file-input" type="file" onChange={onFileUpload}/>
-                <button className="add-file-btn">Choose an image</button>
+                <button className="add-file-btn"><FaPlus className="plus-icon" /></button>
               </div>
-              {imagePreview && <button
-                  className="change-avatar-btn" 
-                  onClick={croppAndUploadImage}
-                >Accept and upload</button>
-              }
             </div>
             {!isUploadedFileValid && <span className="preview-error">Format of this file is not supported</span>}
             {imagePreview
-              ? <Cropper
-                  className="preview-container"
-                  aspectRatio={1}
-                  src={imagePreview.toString()}
-                  viewMode={3}
-                  background={true}
-                  autoCropArea={0.3}
-                  center={false}
-                  responsive={true}
-                  restore={true}
-                  onInitialized={setCropper}
-                />
+              ?
+              <>
+                <Cropper
+                    className="preview-container"
+                    aspectRatio={1}
+                    src={imagePreview.toString()}
+                    viewMode={3}
+                    background={true}
+                    autoCropArea={0.3}
+                    center={false}
+                    responsive={true}
+                    restore={true}
+                    onInitialized={setCropper}
+                  />
+                  <button className="change-avatar-btn" onClick={croppAndUploadImage}>Change Avatar</button>
+                </>
               : <span className="preview-text">Upload The Image</span>
             }
           </>
