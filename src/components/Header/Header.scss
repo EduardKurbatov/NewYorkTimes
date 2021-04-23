@@ -48,11 +48,14 @@ $mainBackgroundColor: rgba(63, 81, 181, 1);
       align-items: center;
       width: 100%;
       height: 100%;
-      .ion-chevron-down, .ion-chevron-up {
+      .chevron {
         color: $font-color;
         margin-top: 10px;
         padding-right: 25px;
-        font-size: 12px;
+        font-size: 18px;
+      }
+      .chevron:hover {
+        font-size: 19px;
       }
       .user-avatar {
         max-width: 50px;
@@ -80,13 +83,11 @@ $mainBackgroundColor: rgba(63, 81, 181, 1);
         border: none;
         font-family: 'Roboto';
         font-weight: 400;
-        i {
-        font-size: 15px;
+        border-bottom: 1px solid rgb(49, 48, 48);
+        .profile-icon, .logout-icon {
+        font-size: 12px;
         margin-left: 5px;
         }
-      }
-      .drop-down-item {
-        border-bottom: 1px solid rgb(49, 48, 48);
       }
       .drop-down-item:hover {
         background:$mainBackgroundColor;
