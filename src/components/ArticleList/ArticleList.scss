@@ -63,7 +63,7 @@ $articleTextColor: #fff;
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 600px) {
   .articles-container .article {
     &:nth-child(odd) {
       margin-right: 0;
@@ -81,6 +81,14 @@ $articleTextColor: #fff;
       .title {
         font-size: 15px;
       }
+    }
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .articles-container .article {
+    &:nth-child(odd) {
+      margin-right: 15px;
     }
   }
 }
