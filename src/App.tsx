@@ -6,7 +6,7 @@ import Sign from './components/Sign/Sign';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Profile from './components/Profile/Profile';
-import ArticlePage from './components/ArticlePage/ArticlePage';
+import ArticlePage from './components/Article/Article';
 import fire from './fire';
 
 export enum Routes {
@@ -51,6 +51,8 @@ const App = () => {
             <Route>
               <Redirect to={Routes.MAIN} />
             </Route>
+            {/* If page is not found - redirect to Routes.MAIN */}
+            
           </Switch>
         </BrowserRouter>
       </div>

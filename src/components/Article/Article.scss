@@ -78,82 +78,77 @@
   }
 }
 
-@media screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 767px) {
-    .article-page {
-      margin-top: 50px;
-      min-height: 170px;
-      height: auto;
-      margin-top: 10px;
-      .article-image {
-        width: 100%;
-        min-height: 100%;
-      }
-      .article-items {
-        width: 80%;
-        margin: 0 auto;
+@media screen and (min-device-width: 320px) and (max-device-width: 767px) {
+  .article-page {
+    margin-top: 50px;
+    min-height: 170px;
+    height: auto;
+    .article-image {
+      width: 100%;
+      min-height: 100%;
+    }
+    .article-items {
+      width: 80%;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+      justify-content: flex-end;
+      .title {
+        font-size: 10px;
         margin-bottom: 10px;
-        padding-bottom: 0;
-        justify-content: flex-end;
-        .title {
-          font-size: 10px;
-          margin-bottom: 10px;
-        }
-        .author {
-          font-size: 8px;
-          margin-bottom: 5px;
-        }
-        .author > span {
+      }
+      .author {
+        font-size: 8px;
+        margin-bottom: 5px;
+        & > span {
           border-bottom: .5px solid rgba(12, 12, 12, .6);
         }
-        .tags {
-          display: none;
-        }
-        .information {
-          font-size: 10px;
-        }
-        .go-back-button {
-          width: 35px;
-          margin-bottom: 10px;
-          height: 15px;
-          font-size: 6px;
-          right: 0;
-        }
+      }
+      .tags {
+        display: none;
+      }
+      .information {
+        font-size: 10px;
+      }
+      .go-back-button {
+        width: 35px;
+        margin-bottom: 10px;
+        height: 15px;
+        font-size: 6px;
+        right: 0;
       }
     }
   }
+}
 
-@media screen
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) {
-    .article-page{
-      min-height: 540px;
-      height: auto;
-      .article-items {
-        width: 80%;
-        .title {
-          font-size: 20px;
-          margin-bottom: 10px;
-        }
-        .author {
-          font-size: 10px;
-          margin-bottom: 10px;
-        }
-        .author > span {
+@media screen and (min-device-width: 768px)  and (max-device-width: 1024px) {
+  .article-page{
+    min-height: 540px;
+    height: auto;
+    .article-items {
+      width: 80%;
+      .title {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .author {
+        font-size: 10px;
+        margin-bottom: 10px;
+        & > span {
           border-bottom: .5px solid rgba(12, 12, 12, .7);
         }
-        .tags {
-          display: none;
-        }
-        .information {
-          font-size: 15px;
-        }
-        .go-back-button {
-          width: 60px;
-          height: 30px;
-          font-size: 10px;
-        }
+      }
+      .tags {
+        display: none;
+      }
+      .information {
+        font-size: 15px;
+      }
+      .go-back-button {
+        width: 60px;
+        height: 30px;
+        font-size: 10px;
       }
     }
   }
+}

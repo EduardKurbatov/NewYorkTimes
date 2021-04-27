@@ -1,10 +1,10 @@
-import '../ArticlePage/ArticlePage.scss';
-import { Items } from '../types';
+import './Article.scss';
+import { ArticleItem } from '../types';
 import { IoIosArrowBack} from 'react-icons/io';
 
 interface Props {
-  articleItems: Items | undefined,
-  setArticleItems: (value: React.SetStateAction<Items | undefined>) => void,
+  articleItems: ArticleItem | undefined,
+  setArticleItems: (value: React.SetStateAction<ArticleItem | undefined>) => void,
   setShowArticle: (value: React.SetStateAction<boolean>) => void
 };
 
@@ -16,7 +16,7 @@ function ArticlePage ({articleItems, setShowArticle, setArticleItems}: Props) {
   };
 
   return (
-    <div className='article-page'>
+    <div className="article-page">
       <div className="fade"></div>
       {articleItems?.imgUrl && <img className="article-image" src={articleItems?.imgUrl} />}
       <div className="article-items">
@@ -28,7 +28,7 @@ function ArticlePage ({articleItems, setShowArticle, setArticleItems}: Props) {
           <span>{articleItems?.byLine}</span>
         </div>
         <div className="tags">
-         {articleItems?.tags.map((tag, index) => {
+         {articleItems?.des_facet.map((tag, index) => {
             return (
               <div className="tag" key={index}>
                 <span>{tag}</span>

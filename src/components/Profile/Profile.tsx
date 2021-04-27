@@ -30,7 +30,7 @@ const Profile = ({setUser}: Props) => {
         setImagePreview(reader.result);
       });
       reader.readAsDataURL(file as Blob);
-      setUploadedImageName(file?.name);
+      setUploadedImageName(file?.name); // checking if file is defined, because eslint wants it to be so
     }
 
     e.target.value = '';
@@ -49,6 +49,10 @@ const Profile = ({setUser}: Props) => {
         const photoURL: string = await fileRef.getDownloadURL();
 
         const user: firebase.User | null = firebase.auth().currentUser;
+
+        /* we need to fetch user from firebase here, because after first image upload
+          * updateProfile method gets removed from the User object for some reason
+        */
 
         await user?.updateProfile({photoURL});
         user && setUser({...user, photoURL: user.photoURL});
