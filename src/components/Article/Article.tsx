@@ -1,6 +1,6 @@
 import './Article.scss';
 import { ArticleRecord } from '../types';
-import { IoIosArrowBack} from 'react-icons/io';
+import { IoIosArrowBack } from 'react-icons/io';
 
 interface Props {
   articleItems: ArticleRecord | undefined,
