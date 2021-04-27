@@ -1,7 +1,7 @@
 import './ArticleList.scss';
 import { ArticleItem, ArticleItems } from '../types';
 import firebase from 'firebase';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import { Routes } from '../../App';
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
 
 
 function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props) {
+  const history = useHistory();
 
   const itemsListener = ({title, media, byline, des_facet, abstract} : ArticleItems) => {
     if (user) { 
@@ -26,7 +27,7 @@ function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props)
       setArticleItems(items);
       setShowArticle(true);
     } else {
-      <Redirect to={Routes.MAIN} />
+      history.push(Routes.SIGN);
     }
   };
 
