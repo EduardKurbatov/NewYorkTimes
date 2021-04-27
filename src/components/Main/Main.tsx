@@ -21,6 +21,7 @@ function Main({user}: Props) {
   const [articles, setArticles] = useState<ArticleItems[]>([]);
   const [articleItems, setArticleItems] = useState<ArticleItem | undefined>();
   const [showArticle, setShowArticle] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getArticles = async (): Promise<void> => {
     const response = await fetch(url, options);
@@ -28,6 +29,7 @@ function Main({user}: Props) {
     if (response?.ok) {
       const articles = await response.json();
       setArticles(articles.results);
+      setLoading(false);
     } else {
       throw new Error(response.statusText);
     };
@@ -37,7 +39,10 @@ function Main({user}: Props) {
     getArticles();
   }, []);
 
-  return (
+  return loading
+    ?
+      <h2>loading...</h2>
+    :
     <div className="main-page">
       {!showArticle
         ?
@@ -45,7 +50,6 @@ function Main({user}: Props) {
         :
           <Article articleItems={articleItems} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />}
     </div>
-  );
 };
 
 export default Main;
