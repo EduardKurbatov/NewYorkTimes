@@ -129,6 +129,19 @@ const Sign = ({setUser, user} : Props) => {
     });
   };
 
+  const loginWithFacebookAccount = (): void => { 
+    const provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().useDeviceLanguage();
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then((result: any) => {
+        setUser(result.user);
+        history.push('/');
+      }).catch((error) => {
+        setErrorMessages(error?.message);
+    });
+  };
+
   return (
     <div className="login">
       <div className="loginContainer">
@@ -176,6 +189,7 @@ const Sign = ({setUser, user} : Props) => {
             <span onClick={changeSign}>Sign {accountWasCreated ? 'In' : 'Up'}</span>
           </p>
           <button onClick={loginWithGoogleAccount}>Sign with Goole</button>
+          <button onClick={loginWithFacebookAccount}>Sign with Facebook</button>
         </div>
         {errorMessages && 
           <ErrorModal
