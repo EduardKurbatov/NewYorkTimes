@@ -1,30 +1,22 @@
 import './ArticleList.scss';
-import { ArticleItem, ArticleItems } from '../types';
+import { ArticleRecord } from '../types';
 import firebase from 'firebase';
 import { useHistory } from 'react-router';
 import { Routes } from '../../App';
 
 type Props = {
   user: firebase.User | null,
-  articles: ArticleItems[],
-  setArticleItems: (value: React.SetStateAction<ArticleItem | undefined>) => void,
+  articles: ArticleRecord[],
+  setArticleItems: (value: React.SetStateAction<ArticleRecord | undefined>) => void,
   setShowArticle: (value: React.SetStateAction<boolean>) => void
-}
-
+};
 
 function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props) {
   const history = useHistory();
 
-  const itemsListener = ({title, media, byline, des_facet, abstract} : ArticleItems) => {
-    if (user) { 
-      const items = {
-        title: title,
-        imgUrl: media[0] ? media[0]['media-metadata'][2].url : '',
-        byLine: byline,
-        des_facet: des_facet,
-        abstract: abstract
-      }
-      setArticleItems(items);
+  const itemsListener = (index: number) => {
+    if (user) {
+      setArticleItems(articles[index]);
       setShowArticle(true);
     } else {
       history.push(Routes.SIGN);
@@ -33,17 +25,17 @@ function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props)
 
   return (
     <div className="articles-container"> 
-      {articles.map((article: ArticleItems, index) => {
+      {articles.map(({byline, title, media}: ArticleRecord, index) => {
         return (
-          <div className="article" key={index} onClick={() => {itemsListener(article)}}>
-          <div className="fade"></div>
-          <div className="author-container">
-            <span className="author">{article.byline}</span>
-          </div>
-          <div className="title-container">
-            <span className="title">{article.title}</span>
-          </div>
-          {article.media[0] && <img className="article-title-image" src={article.media[0]["media-metadata"][2].url} alt={article.title} />}
+          <div className="article" key={index} onClick={() => {itemsListener(index)}}>
+            <div className="fade"></div>
+            <div className="author-container">
+              <span className="author">{byline}</span>
+            </div>
+            <div className="title-container">
+              <span className="title">{title}</span>
+            </div>
+            {media[0] && <img className="article-title-image" src={media[0]["media-metadata"][2].url} alt={title} />}
           </div>
         )})}
     </div>

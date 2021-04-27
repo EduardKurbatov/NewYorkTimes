@@ -14,7 +14,7 @@ export type Media = {
   type: string
 };
 
-export type ArticleItems = {
+export type ArticleRecord = {
   abstract: string,
   adx_keywords: string,
   asset_id: number,
@@ -37,12 +37,4 @@ export type ArticleItems = {
   updated: string,
   uri: string,
   url: string
-};
-
-export type ArticleItem = {
-  title: string,
-  imgUrl: string,
-  byLine: string,
-  des_facet: string[],
-  abstract: string
 };

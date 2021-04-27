@@ -1,6 +1,6 @@
 import './Main.scss';
 import { useEffect, useState } from 'react';
-import { ArticleItems, ArticleItem } from '../types';
+import { ArticleRecord } from '../types';
 import firebase from 'firebase';
 import Article from '../Article/Article';
 import ArticleList from '../ArticleList/ArticleList';
@@ -18,8 +18,8 @@ type Props = {
 };
 
 function Main({user}: Props) {
-  const [articles, setArticles] = useState<ArticleItems[]>([]);
-  const [articleItems, setArticleItems] = useState<ArticleItem | undefined>();
+  const [articles, setArticles] = useState<ArticleRecord[]>([]);
+  const [articleItems, setArticleItems] = useState<ArticleRecord | undefined>();
   const [showArticle, setShowArticle] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -45,10 +45,8 @@ function Main({user}: Props) {
     :
     <div className="main-page">
       {!showArticle
-        ?
-          <ArticleList user={user} articles={articles} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />
-        :
-          <Article articleItems={articleItems} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />}
+        ? <ArticleList user={user} articles={articles} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />
+        : <Article articleItems={articleItems} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />}
     </div>
 };
 
