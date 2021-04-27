@@ -14,14 +14,14 @@ type Props = {
 
 function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props) {
 
-  const itemsListener = (article: ArticleItems) => {
+  const itemsListener = ({title, media, byline, des_facet, abstract} : ArticleItems) => {
     if (user) { 
       const items = {
-        title: article.title,
-        imgUrl: article.media[0] ? article.media[0]['media-metadata'][2].url : '',
-        byLine: article.byline,
-        des_facet: article.des_facet,
-        abstract: article.abstract
+        title: title,
+        imgUrl: media[0] ? media[0]['media-metadata'][2].url : '',
+        byLine: byline,
+        des_facet: des_facet,
+        abstract: abstract
       }
       setArticleItems(items);
       setShowArticle(true);
