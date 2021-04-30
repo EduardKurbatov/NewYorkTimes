@@ -53,7 +53,6 @@ const Profile = ({setUser}: Props) => {
         */
         const user: firebase.User | null = firebase.auth().currentUser;
 
-
         await user?.updateProfile({photoURL});
         user && setUser({...user, photoURL: user.photoURL});
         setImagePreview(null);

@@ -47,7 +47,6 @@ const App = () => {
                 : <Redirect to={Routes.SIGN} />
               }
             </Route>
-
             {/* If page is not found - redirect to Routes.MAIN */}
             <Route>
               <Redirect to={Routes.MAIN} />

@@ -7,17 +7,15 @@ import { Routes } from '../../App';
 type Props = {
   user: firebase.User | null,
   articles: ArticleRecord[],
-  setArticleItems: (value: React.SetStateAction<ArticleRecord | undefined>) => void,
-  setShowArticle: (value: React.SetStateAction<boolean>) => void
+  setArticleRecords: (value: React.SetStateAction<ArticleRecord | undefined>) => void,
 };
 
-function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props) {
+function ArticleList ({user, articles, setArticleRecords} : Props) {
   const history = useHistory();
 
   const itemsListener = (index: number) => {
     if (user) {
-      setArticleItems(articles[index]);
-      setShowArticle(true);
+      setArticleRecords(articles[index]);
     } else {
       history.push(Routes.SIGN);
     }
@@ -37,7 +35,8 @@ function ArticleList ({user, articles, setArticleItems, setShowArticle} : Props)
             </div>
             {media[0] && <img className="article-title-image" src={media[0]["media-metadata"][2].url} alt={title} />}
           </div>
-        )})}
+        )
+      })}
     </div>
   )
 };

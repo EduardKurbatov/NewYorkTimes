@@ -19,8 +19,7 @@ type Props = {
 
 function Main({user}: Props) {
   const [articles, setArticles] = useState<ArticleRecord[]>([]);
-  const [articleItems, setArticleItems] = useState<ArticleRecord | undefined>();
-  const [showArticle, setShowArticle] = useState<boolean>(false);
+  const [articleRecords, setArticleRecords] = useState<ArticleRecord | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
 
   const getArticles = async (): Promise<void> => {
@@ -29,10 +28,10 @@ function Main({user}: Props) {
     if (response?.ok) {
       const articles = await response.json();
       setArticles(articles.results);
-      setLoading(false);
     } else {
       throw new Error(response.statusText);
     };
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -40,13 +39,12 @@ function Main({user}: Props) {
   }, []);
 
   return loading
-    ?
-      <h2>loading...</h2>
-    :
-    <div className="main-page">
-      {!showArticle
-        ? <ArticleList user={user} articles={articles} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />
-        : <Article articleItems={articleItems} setArticleItems={setArticleItems} setShowArticle={setShowArticle} />}
+    ? <h2>loading...</h2>
+    : <div className="main-page">
+      {!articleRecords
+        ? <ArticleList user={user} articles={articles} setArticleRecords={setArticleRecords} />
+        : <Article articleRecords={articleRecords} setArticleRecords={setArticleRecords} />
+      }
     </div>
 };
 
