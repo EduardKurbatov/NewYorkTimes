@@ -15,7 +15,7 @@ function Article ({articleRecords, setArticleRecords}: Props) {
   return (
     <div className="article-page">
       <div className="fade"></div>
-      {articleRecords?.media && <img className="article-image" src={articleRecords?.media[0]['media-metadata'][2].url} />}
+      {articleRecords?.media && <img className="article-image" src={articleRecords.media[0]['media-metadata'][2].url} />}
       <div className="article-items">
         <button className="go-back-button" onClick={backToArticleList}><IoIosArrowBack className="arrow-back-icon" />Go Back</button>
         <div className="title">

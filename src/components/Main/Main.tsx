@@ -31,6 +31,7 @@ function Main({user}: Props) {
     } else {
       throw new Error(response.statusText);
     };
+
     setLoading(false);
   };
 
@@ -41,10 +42,10 @@ function Main({user}: Props) {
   return loading
     ? <h2>loading...</h2>
     : <div className="main-page">
-      {!articleRecords
-        ? <ArticleList user={user} articles={articles} setArticleRecords={setArticleRecords} />
-        : <Article articleRecords={articleRecords} setArticleRecords={setArticleRecords} />
-      }
+        {!articleRecords
+          ? <ArticleList user={user} articles={articles} setArticleRecords={setArticleRecords} />
+          : <Article articleRecords={articleRecords} setArticleRecords={setArticleRecords} />
+        }
     </div>
 };
 
