@@ -26,14 +26,15 @@ function ArticleList ({user, articles, setArticleRecords} : Props) {
       {articles.map(({byline, title, media}: ArticleRecord, index) => {
         return (
           <div className="article" key={index} onClick={() => {itemsListener(index)}}>
-            <div className="fade"></div>
-            <div className="author-container">
-              <span className="author">{byline}</span>
-            </div>
-            <div className="title-container">
-              <span className="title">{title}</span>
-            </div>
             {media[0] && <img className="article-title-image" src={media[0]["media-metadata"][2].url} alt={title} />}
+            <div className="article-records"> 
+              <div className="author-container">
+                <span className="author">{byline}</span>
+              </div>
+              <div className="title-container">
+                <span className="title">{title}</span>
+              </div>
+            </div>
           </div>
         )
       })}
