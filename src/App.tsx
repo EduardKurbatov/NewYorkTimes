@@ -30,13 +30,13 @@ const App = () => {
   }, []);
 
   return loading
-    ? <h2>Loading...</h2> // TODO: add loader component here
+    ? <h2>Loading...</h2>
     : <div className="app">
         <BrowserRouter>
           <Header user={user} />
           <Switch>
             <Route exact path={Routes.MAIN}>
-              <Main />
+              <Main user={user} />
             </Route>
             <Route path={Routes.SIGN}>
               <Sign />
@@ -49,7 +49,7 @@ const App = () => {
             </Route>
             {/* If page is not found - redirect to Routes.MAIN */}
             <Route>
-              <Redirect to={Routes.MAIN}/>
+              <Redirect to={Routes.MAIN} />
             </Route>
           </Switch>
         </BrowserRouter>

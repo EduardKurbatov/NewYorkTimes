@@ -47,8 +47,9 @@ const Profile = ({setUser}: Props) => {
         setFileValidationStatus(true);
 
         const photoURL: string = await fileRef.getDownloadURL();
+
         /* we need to fetch user from firebase here, because after first image upload
-         * updateProfile method gets removed from the User object for some reason
+          * updateProfile method gets removed from the User object for some reason
         */
         const user: firebase.User | null = firebase.auth().currentUser;
 

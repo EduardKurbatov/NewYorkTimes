@@ -14,7 +14,7 @@ export type Media = {
   type: string
 };
 
-export type Article = {
+export type ArticleRecord = {
   abstract: string,
   adx_keywords: string,
   asset_id: number,
@@ -38,4 +38,3 @@ export type Article = {
   uri: string,
   url: string
 };
-
